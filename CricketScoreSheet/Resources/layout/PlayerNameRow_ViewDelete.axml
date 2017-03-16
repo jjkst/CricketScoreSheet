@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:layout_margin="5dp">
+    <TextView
+        android:id="@+id/textplayername"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="95"
+        android:paddingLeft="10dp"
+        android:text="New Player Name"
+        android:gravity="center_vertical"/>
+    <Button
+        android:id="@+id/deleteplayer"
+        android:layout_height="32dp"
+        android:layout_width="32dp"
+        android:paddingLeft="20dp"
+        android:background="@drawable/action_delete" />
+</LinearLayout>

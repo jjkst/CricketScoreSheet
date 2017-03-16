@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="300dp"
+    android:minHeight="400dp"
+    android:weightSum="100">
+    <TextView
+        android:text="Abandon Match Conclusion"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/Style_TitleBar" />
+    <TextView
+        android:text="Match Result :"
+        android:layout_marginTop="5dp"
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold|italic" />
+    <Spinner
+        android:layout_weight="12"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/matchresult"
+        style="@style/style_spinner" />
+    <TextView
+        android:text="Winner :"
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold|italic" />
+    <Spinner
+        android:layout_weight="12"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/winner"
+        style="@style/style_spinner" />
+    <EditText
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:minLines="3"
+        android:maxLines="7"
+        android:gravity="top|left"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="30"
+        android:layout_margin="2dp"
+        android:hint="Comments"
+        android:background="@color/grey"
+        android:id="@+id/comments"
+        android:padding="15dp" />
+    <Space
+        android:layout_weight="6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <Button
+        android:id="@+id/declarematch"
+        android:layout_margin="30dp"
+        android:layout_width="match_parent"
+        android:layout_weight="15"
+        android:layout_height="0dp"
+        android:background="@drawable/Style_Button"
+        android:text="Declared"
+        android:textColor="@color/abc_secondary_text_material_light" />
+</LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/newgameButton"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/Style_Button"
+        android:text="New Game"
+        android:textColor="@color/abc_secondary_text_material_light" />
+    <Button
+        android:id="@+id/savedgamesButton"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/Style_Button"
+        android:text="Saved Games"
+        android:textColor="@color/abc_secondary_text_material_light" />
+</LinearLayout>

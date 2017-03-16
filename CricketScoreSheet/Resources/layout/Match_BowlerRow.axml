@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:padding="5dp"
+    android:weightSum="100">
+  <TextView
+      android:id="@+id/bowlerName"
+      android:textStyle="bold"
+      android:textColor="@color/titlebar"
+      android:gravity="left|center_vertical"
+      android:paddingLeft="5dp"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="45" />
+  <TextView
+      android:id="@+id/bowlerOvers"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+    android:id="@+id/bowlerDots"
+    android:gravity="center"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="10" />
+  <TextView
+      android:id="@+id/bowlerRuns"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+      android:id="@+id/bowlerWickets"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+      android:id="@+id/bowlerEcon"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="15" />
+</LinearLayout>

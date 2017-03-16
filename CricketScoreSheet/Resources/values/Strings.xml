@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">CricketScoreSheet</string>
+    <string name="ApplicationName">Cricket Score Sheet</string>
+    <string name="Menu">Match/Player Statistics</string>
+    <string name="action_score">Score</string>
+    <string name="action_addplayer">AddPlayer</string>
+    <string name="action_addbatsman">AddBatsman</string>
+    <string name="action_addbowler">AddBowler</string>
+    <string name="action_search">Search</string>
+    <string name="action_help">Help</string>
+    <string name="action_other">Other</string>
 </resources>

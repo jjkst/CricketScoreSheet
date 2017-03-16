@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <group android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_home"
+      android:title="Home" />
+    <item
+      android:id="@+id/nav_matchresults"
+      android:title="Match Results" />
+    <item
+      android:id="@+id/nav_batsmanstats"
+      android:title="Batsman Statistics" />
+    <item
+      android:id="@+id/nav_bowlerstats"
+      android:title="Bowler Statistics" />
+  </group>
+  <item android:title="Additional Items">
+    <menu>
+      <item 
+        android:id="@+id/clearstorage"
+        android:title="Clear Storage" />
+    </menu>
+  </item>
+</menu>

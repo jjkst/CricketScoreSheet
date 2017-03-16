@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/currentmatchlayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/AppBar" />
+    <RadioGroup
+        android:id="@+id/currentinnings"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:weightSum="100">
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:layout_margin="2dp"
+            android:gravity="center"
+            android:textColor="@color/titlebar"
+            android:button="@android:color/transparent"
+            android:background="@drawable/Radio_Innings"
+            android:id="@+id/hometeaminnings" />
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="50"
+            android:layout_margin="2dp"
+            android:gravity="center"
+            android:textColor="#2196F3"
+            android:button="@android:color/transparent"
+            android:background="@drawable/Radio_Innings"
+            android:id="@+id/awayteaminnings" />
+    </RadioGroup>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/playerslist">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <FrameLayout
+                android:id="@+id/BatsmanFrameLayout"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="50" />
+            <FrameLayout
+                android:id="@+id/BowlerFrameLayout"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="50" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

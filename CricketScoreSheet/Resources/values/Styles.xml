@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="style_customDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+    <item name="android:windowNoTitle">false</item>
+  </style>
+  
+  <style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
+    <item name="colorControlNormal">#0C92CF</item>
+    <item name="colorPrimary">#2196F3</item>
+    <item name="colorPrimaryDark">#1976D2</item>
+    <item name="colorAccent">#0C92CF</item>
+    <item name="android:dialogTheme">@style/style_customDialog</item>
+  </style>
+  
+  <style name="MyTheme" parent="MyTheme.Base"></style>
+
+  <style name="style_dialogAnimation">
+    <item name="android:windowEnterAnimation">@anim/SlideUp</item>
+    <item name="android:windowExitAnimation">@anim/SlideRight</item>
+  </style>
+  
+  <style name="style_customAlertDialog" parent="@android:style/Theme.Dialog">
+    <item name="android:textColor">#FFFFFF</item>
+    <item name="android:typeface">monospace</item>
+    <item name="android:textSize">10sp</item>
+  </style>
+  
+  <style name="style_spinner">
+    <item name="windowNoTitle">true</item>
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">40dp</item>
+    <item name="android:background">@drawable/Style_Spinner</item>
+    <item name="android:layout_margin">10dp</item>
+    <item name="android:paddingLeft">8dp</item>
+    <item name="android:paddingRight">20dp</item>
+    <item name="android:paddingTop">5dp</item>
+    <item name="android:paddingBottom">5dp</item>
+    <item name="android:popupBackground">#DFFFFFFF</item>
+  </style>
+  
+</resources>

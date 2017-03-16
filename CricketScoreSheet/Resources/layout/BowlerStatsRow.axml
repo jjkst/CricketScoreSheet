@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:weightSum="100">
+  <TextView
+      android:id="@+id/name_bowler"
+      android:textStyle="bold"
+      android:textColor="@color/titlebar"      
+      android:gravity="left|center_vertical"
+      android:paddingLeft="5dp"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="35" />
+  <TextView
+      android:id="@+id/matches_bowler"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+      android:id="@+id/balls_bowler"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+      android:id="@+id/runs_bowler"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+      android:id="@+id/wickets_bowler"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="10" />
+  <TextView
+      android:id="@+id/average_bowler"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="12" />
+  <TextView
+      android:id="@+id/economy_bowler"
+      android:gravity="center"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="13" />
+
+</LinearLayout>

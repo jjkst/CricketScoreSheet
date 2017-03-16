@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+  <TextView
+      android:text="Runout Details"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:textSize="20sp"
+      android:textColor="#ffffff"
+      android:gravity="center"
+      android:background="@drawable/Style_TitleBar" />
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_marginTop="5dp"
+      android:weightSum="100">
+    <TextView
+        android:text="Batsman scored runs"
+        android:layout_width="0dp"
+        android:layout_weight="40"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:textStyle="bold|italic" />
+    <Spinner
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="60"
+        android:id="@+id/runoutruns"
+        style="@style/style_spinner" />
+  </LinearLayout>
+  <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginTop="5dp"
+    android:weightSum="100">
+    <TextView
+        android:text="Select yes if runner out"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="40"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:textStyle="bold|italic" />
+    <RadioGroup
+        android:id="@+id/runnerout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="60"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="100">
+      <RadioButton
+          android:id="@+id/yesrunnerout"
+          android:text="yes"
+          android:scaleX="0.85"
+          android:scaleY="0.85"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="50"
+          android:textSize="13sp" />
+      <RadioButton
+          android:id="@+id/norunnerout"
+          android:text="no"
+          android:scaleX="0.85"
+          android:scaleY="0.85"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="50"
+          android:textSize="13sp" />
+    </RadioGroup>
+  </LinearLayout>
+  <LinearLayout
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="60dp"
+  android:layout_marginTop="5dp"
+  android:weightSum="100">
+  <TextView
+     android:text="Select batsman"
+     android:layout_width="0dp"
+     android:layout_height="match_parent"
+     android:layout_weight="40"     
+     android:gravity="center_vertical"
+     android:paddingLeft="10dp"
+     android:textStyle="bold|italic" />
+  <Spinner
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="60"
+      android:id="@+id/runnerbatsman"
+      style="@style/style_spinner" />
+  </LinearLayout>
+</LinearLayout>
