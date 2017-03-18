@@ -36,8 +36,7 @@ namespace CricketScoreSheet.Adapters
                 : vh.ItemView.Resources.GetColor(Resource.Color.rowone));
 
             vh.BowlerName.Text = _mPlayers[position].Name;
-            int ab; var ao = Math.DivRem(_mPlayers[position].BallsBowled, 6, out ab);
-            var overs = ao + "." + ab;
+            string overs = Helper.ConvertBallstoOvers(_mPlayers[position].BallsBowled);
             vh.BowlerOvers.Text = overs;
             vh.BowlerRuns.Text = _mPlayers[position].RunsGiven.ToString();
             vh.BowlerWickets.Text = _mPlayers[position].Wickets.ToString();

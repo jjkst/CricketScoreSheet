@@ -60,7 +60,6 @@ namespace CricketScoreSheet.Screens
             // Initialize toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            SupportActionBar.SetTitle(Resource.String.ApplicationName);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
@@ -131,6 +130,7 @@ namespace CricketScoreSheet.Screens
                 bowlingTeam = Match.HomeTeam;
             }
 
+            SupportActionBar.Title = battingTeam.Name + " Innings";
             var batsmanAdapter = new SpinnerAdapter(this, Resource.Layout.Row,
                         battingTeam.Players.Where(o => o.HowOut == "not out").Select(p => p.Name).ToArray());
             mActiveBatsman.Adapter = batsmanAdapter;

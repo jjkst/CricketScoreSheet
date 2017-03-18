@@ -71,12 +71,15 @@ namespace CricketScoreSheet
                     ft.Replace(Resource.Id.FrameLayout, new HomeFragment());
                     break;
                 case (Resource.Id.nav_matchresults):
+                    SupportActionBar.SetTitle(Resource.String.CompletedMatches);
                     ft.Replace(Resource.Id.FrameLayout, new MatchesFragment());
                     break;
                 case (Resource.Id.nav_batsmanstats):
+                    SupportActionBar.SetTitle(Resource.String.BatsmanStats);
                     ft.Replace(Resource.Id.FrameLayout, new BatsmanStatsFragment());
                     break;
                 case (Resource.Id.nav_bowlerstats):
+                    SupportActionBar.SetTitle(Resource.String.BowlerStats);
                     ft.Replace(Resource.Id.FrameLayout, new BowlerStatsFragment());
                     break;
                 case (Resource.Id.clearstorage):

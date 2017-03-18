@@ -37,7 +37,7 @@ namespace CricketScoreSheet.Screens
             // Initialize toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            SupportActionBar.SetTitle(Resource.String.ApplicationName);
+            SupportActionBar.SetTitle(Resource.String.SavedMatches);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 

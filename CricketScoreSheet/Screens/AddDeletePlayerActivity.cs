@@ -49,10 +49,10 @@ namespace CricketScoreSheet.Screens
             // Initialize toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            SupportActionBar.SetTitle(Resource.String.ApplicationName);
+            var teamname = Access.TeamService.GetTeam(SelectedTeam == "Batting" ? BattingTeamId : BowlingTeamId).Name;
+            SupportActionBar.Title = teamname + " team players";
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
-
             mNewPlayerName = FindViewById<EditText>(Resource.Id.newplayer);
             mAddNewPlayerBtn = FindViewById<Button>(Resource.Id.addnewplayer);
             mAddNewPlayerBtn.Click += AddNewPlayerBtn_Click;

@@ -297,5 +297,161 @@ namespace CricketScoreSheet.Shared.Services
                 WinningTeamName = matchentity.WinningTeamName
             };
         }
+
+        public string CreateHtml(Match match)
+        {
+            string hometeamovers = Helper.ConvertBallstoOvers(match.HomeTeam.Balls);
+            string awayteamovers = Helper.ConvertBallstoOvers(match.AwayTeam.Balls);
+
+            var header = @"<head>
+                                <style>
+                                    body.ClassName{background-color: WhiteSmoke ;position:fixed; margin:0px; width:100%; height:100%;}
+                                    div.ClassName{background-color: DimGray ;color: white;margin: 30px 30px 30px 30px;padding: 20px; border-style: solid;}
+                                    th.header{background-color: DarkCyan;color: white;font-size:20px; text-align:center;}
+									td.data{padding: 5px 5px 5px 10px;font-size:18px;}
+                                    td.textcenter{text-align:center;}
+                                </style>
+                           </head>";
+            var card = $@"<div class=""ClassName"">
+                                <h3> {match.Date}, at {match.Location} </h3>
+                                <label> {match.HomeTeam.Name} {match.HomeTeam.Runs}/{match.HomeTeam.Wickets} ({hometeamovers}/{match.TotalOvers}) </label></br>      
+                                <label> {match.AwayTeam.Name} {match.AwayTeam.Runs}/{match.AwayTeam.Wickets} ({awayteamovers}/{match.TotalOvers}) </label></br>        
+                                <label> {match.Comments} </label>            
+                           </div>";
+
+            var fi_BattingHeader = $@"<tr>
+                                    <th colspan=""2"" class=""header""><center>{match.HomeTeam.Name} Innings ({match.TotalOvers} over(s) maximum)</center></th>
+                                    <th class=""header"" align=""left"">R</th>
+                                    <th class=""header"" align=""left"">B</th>
+                                    <th class=""header"" align=""left"">4s</th>
+                                    <th class=""header"" align=""left"">6s</th>
+                                    <th class=""header"" align=""left"">SR</th>
+                                   </tr>";
+
+            string fi_Batsman = "";
+            foreach(var batsman in match.HomeTeam.Players)
+            {
+                var sr = (batsman.BallsPlayed == 0) ? 0 : 
+                    decimal.Round((decimal)batsman.RunsTaken * 100 / batsman.BallsPlayed, 2, MidpointRounding.AwayFromZero);
+                fi_Batsman = fi_Batsman +
+                    $@"<tr>
+                        <td class=""data"">{batsman.Name}</td>
+                        <td class=""data"">{batsman.HowOut}</td>
+                        <td class=""data textcenter"">{batsman.RunsTaken}</td>
+                        <td class=""data textcenter"">{batsman.BallsPlayed}</td>
+                        <td class=""data textcenter"">{batsman.Fours}</td>
+                        <td class=""data textcenter"">{batsman.Sixes}</td>
+                        <td class=""data textcenter"">{sr}</td>
+                     <tr>";
+            }
+
+            var fi_Extras = $@"<tr>
+                                <td class=""data"">Extras</td>
+                                <td class=""data"">(nb {match.HomeTeam.NoBalls}, w {match.HomeTeam.Wides}, b {match.HomeTeam.Byes},lb {match.HomeTeam.LegByes})</td>
+                                <td class=""data textcenter"">{(match.HomeTeam.NoBalls + match.HomeTeam.Wides + match.HomeTeam.Byes + match.HomeTeam.LegByes)}</td>
+                            </tr>";
+
+            var fi_Total = $@"<tr>
+                                <td class=""data"">Total</td>
+                                <td class=""data"">({match.HomeTeam.Wickets} wickets; {hometeamovers} overs)</td>
+                                <td class=""data textcenter"">{match.HomeTeam.Runs}</td>
+                                <td class=""data"" colspan=""4"">({(decimal.Round(match.HomeTeam.Runs / Convert.ToDecimal(hometeamovers), 3, MidpointRounding.AwayFromZero))} runs per over)</td>
+                           </tr>";
+
+            var bowlingheader = $@"<tr>
+                                       <th colspan=""2"" class=""header"" align=""left""><center>Bowling</center></th>
+                                       <th class=""header"" align=""left"">O</th>
+                                       <th class=""header"" align=""left"">Dots</th>
+                                       <th class=""header"" align=""left"">R</th>
+                                       <th class=""header"" align=""left"">W</th>
+                                       <th class=""header"" align=""left"">Econ</th>
+                                   </tr>";
+
+            string fi_Bowlers = "";
+            foreach (var bowler in match.AwayTeam.Players)
+            {
+                if (bowler.BallsBowled < 1) continue;
+                var overs = Helper.ConvertBallstoOvers(bowler.BallsBowled);
+                var econ = (bowler.BallsBowled == 0) ? 0 : 
+                    decimal.Round((decimal)bowler.RunsGiven / Convert.ToDecimal(overs), 2, MidpointRounding.AwayFromZero);
+                fi_Bowlers = fi_Bowlers +
+                    $@"<tr>
+                        <td colspan=""2"" class=""data"">{bowler.Name}</td>
+                        <td class=""data textcenter"">{overs}</td>
+                        <td class=""data textcenter"">{bowler.Dots}</td>
+                        <td class=""data textcenter"">{bowler.RunsGiven}</td>
+                        <td class=""data textcenter"">{bowler.Wickets}</td>
+                        <td class=""data textcenter"">{econ}</td>
+                     <tr>";
+            }
+            // Second innings
+            var si_BattingHeader = $@"<tr>
+                                    <th colspan=""2"" class=""header""><center>{match.AwayTeam.Name} Innings ({match.TotalOvers} over(s) maximum)</center></th>
+                                    <th class=""header"" align=""left"">R</th>
+                                    <th class=""header"" align=""left"">B</th>
+                                    <th class=""header"" align=""left"">4s</th>
+                                    <th class=""header"" align=""left"">6s</th>
+                                    <th class=""header"" align=""left"">SR</th>
+                                   </tr>";
+
+            string si_Batsman = "";
+            foreach (var sbatsman in match.AwayTeam.Players)
+            {
+                var ssr = (sbatsman.BallsPlayed == 0) ? 0 :
+                    decimal.Round((decimal)sbatsman.RunsTaken * 100 / sbatsman.BallsPlayed, 2, MidpointRounding.AwayFromZero);
+                si_Batsman = si_Batsman +
+                    $@"<tr>
+                        <td class=""data"">{sbatsman.Name}</td>
+                        <td class=""data"">{sbatsman.HowOut}</td>
+                        <td class=""data textcenter"">{sbatsman.RunsTaken}</td>
+                        <td class=""data textcenter"">{sbatsman.BallsPlayed}</td>
+                        <td class=""data textcenter"">{sbatsman.Fours}</td>
+                        <td class=""data textcenter"">{sbatsman.Sixes}</td>
+                        <td class=""data textcenter"">{ssr}</td>
+                     <tr>";
+            }
+
+            var si_Extras = $@"<tr>
+                                <td class=""data"">Extras</td>
+                                <td class=""data"">(nb {match.AwayTeam.NoBalls}, w {match.AwayTeam.Wides}, b {match.AwayTeam.Byes},lb {match.AwayTeam.LegByes})</td>
+                                <td class=""data textcenter"">{(match.AwayTeam.NoBalls + match.AwayTeam.Wides + match.AwayTeam.Byes + match.AwayTeam.LegByes)}</td>
+                            </tr>";
+
+            var si_Total = $@"<tr>
+                                <td class=""data"">Total</td>
+                                <td class=""data"">({match.AwayTeam.Wickets} wickets; {awayteamovers} overs)</td>
+                                <td class=""data textcenter"">{match.AwayTeam.Runs}</td>
+                                <td class=""data"" colspan=""4"">({(decimal.Round(match.AwayTeam.Runs / Convert.ToDecimal(awayteamovers), 3, MidpointRounding.AwayFromZero))} runs per over)</td>
+                           </tr>";
+
+            string si_Bowlers = "";
+            foreach (var sbowler in match.AwayTeam.Players)
+            {
+                if (sbowler.BallsBowled < 1) continue;
+                var overs = Helper.ConvertBallstoOvers(sbowler.BallsBowled);
+                var econ = (sbowler.BallsBowled == 0) ? 0 :
+                    decimal.Round((decimal)sbowler.RunsGiven / Convert.ToDecimal(overs), 2, MidpointRounding.AwayFromZero);
+                si_Bowlers = si_Bowlers +
+                    $@"<tr>
+                        <td colspan=""2"" class=""data"">{sbowler.Name}</td>
+                        <td class=""data textcenter"">{overs}</td>
+                        <td class=""data textcenter"">{sbowler.Dots}</td>
+                        <td class=""data textcenter"">{sbowler.RunsGiven}</td>
+                        <td class=""data textcenter"">{sbowler.Wickets}</td>
+                        <td class=""data textcenter"">{econ}</td>
+                     <tr>";
+            }
+
+            var finalstring = $@"<html>
+                                {header}
+                                <body class=""ClassName"">
+                                    {card}
+                                    <table width=""100%""><tbody>{fi_BattingHeader}{fi_Batsman}{fi_Extras}{fi_Total}</tbody></table>
+                                    <table width=""100%""><tbody>{bowlingheader}{fi_Bowlers}</tbody></table>
+                                    <table width=""100%""><tbody>{si_BattingHeader}{si_Batsman}{si_Extras}{si_Total}</tbody></table>
+                                    <table width=""100%""><tbody>{bowlingheader}{si_Bowlers}</tbody></table>
+                                </body></html>";
+            return finalstring;
+        }
     }
 }

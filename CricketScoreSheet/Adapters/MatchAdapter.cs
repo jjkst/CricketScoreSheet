@@ -36,11 +36,8 @@ namespace CricketScoreSheet.Adapters
 
             var match = _mMatches[position];
 
-            int hb; int ho = Math.DivRem(_mMatches[position].HomeTeam.Balls, 6, out hb);
-            string hometeamovers = ho + "." + hb;
-
-            int ab; int ao = Math.DivRem(_mMatches[position].AwayTeam.Balls, 6, out ab);
-            string awayteamovers = ao + "." + ab;
+            string hometeamovers = Helper.ConvertBallstoOvers(match.HomeTeam.Balls);
+            string awayteamovers = Helper.ConvertBallstoOvers(match.AwayTeam.Balls);
 
             if (vh == null) return;
             vh.LineOne.Text = $"{match.Date}, at {match.Location}";

@@ -29,7 +29,6 @@ namespace CricketScoreSheet.Screens
         private RadioButton mAwayteaminnings;
 
         private Android.Support.V7.Widget.ShareActionProvider mShareActionProvider;
-        private IMenuItem ShareItem { get; set; }
         private Match Match { get; set; }
         private int MatchId { get; set; }
         private int BattingteamId { get; set; }
@@ -54,7 +53,6 @@ namespace CricketScoreSheet.Screens
             // Initialize toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            SupportActionBar.SetTitle(Resource.String.ApplicationName);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
@@ -100,12 +98,14 @@ namespace CricketScoreSheet.Screens
             if (BattingteamId == Match.HomeTeam.Id)
             {
                 mHometeaminnings.Checked = true;
+                SupportActionBar.Title = Match.HomeTeam.Name + " Innings";
                 batsman = Match.HomeTeam.Players;
                 bowlers = Match.AwayTeam.Players;                
             }
             else
             {
                 mAwayteaminnings.Checked = true;
+                SupportActionBar.Title = Match.AwayTeam.Name + " Innings";
                 batsman = Match.AwayTeam.Players;
                 bowlers = Match.HomeTeam.Players;                
             }
@@ -139,8 +139,8 @@ namespace CricketScoreSheet.Screens
             if (Match.Complete)
             {
                 MenuInflater.Inflate(Resource.Menu.menu_share, menu);
-                ShareItem = menu.FindItem(Resource.Id.action_share);
-                mShareActionProvider = (Android.Support.V7.Widget.ShareActionProvider)MenuItemCompat.GetActionProvider(ShareItem);
+                var shareItem = menu.FindItem(Resource.Id.action_share);
+                mShareActionProvider = (Android.Support.V7.Widget.ShareActionProvider)MenuItemCompat.GetActionProvider(shareItem);
                 SetShareIntent(CreateShareIntent());
             }                
             else
@@ -155,23 +155,19 @@ namespace CricketScoreSheet.Screens
         {
             List<IParcelable> sharingFiles = new List<IParcelable>();
 
-            LinearLayout page = FindViewById<LinearLayout>(Resource.Id.currentmatchlayout);
-            page.DrawingCacheEnabled = true;
-
-            mHometeaminnings.Checked = true;
-            var homeTeamInningsFilePath = System.IO.Path.Combine(Helper.DownloadPath, $"{Match.HomeTeam.Name}_{Match.Id}.png");
-            Helper.TakeScreenShot(homeTeamInningsFilePath, page);
-            sharingFiles.Add(Android.Net.Uri.FromFile(new File(homeTeamInningsFilePath)));
-
-            mAwayteaminnings.Checked = true;
-            var awayTeamInningsFilePath = System.IO.Path.Combine(Helper.DownloadPath, $"{Match.AwayTeam.Name}_{Match.Id}.png");
-            Helper.TakeScreenShot(awayTeamInningsFilePath, page);
-            sharingFiles.Add(Android.Net.Uri.FromFile(new File(awayTeamInningsFilePath)));
-            page.DrawingCacheEnabled = false;
+            var matchResultHtmlFilePath = System.IO.Path.Combine(Helper.DownloadPath,
+                $"{Match.HomeTeam.Name}_{Match.AwayTeam.Name}_{Match.Id}_{Match.Date}".Split(',')[0] + ".html");
+            string html = Access.MatchService.CreateHtml(Match);
+            if (System.IO.File.Exists(matchResultHtmlFilePath))
+                System.IO.File.Delete(matchResultHtmlFilePath);
+            System.IO.File.WriteAllText(matchResultHtmlFilePath, html);
+            sharingFiles.Add(Android.Net.Uri.FromFile(new File(matchResultHtmlFilePath)));
 
             var matchResultJsonFilePath = System.IO.Path.Combine(Helper.DownloadPath, 
                 $"{Match.HomeTeam.Name}_{Match.AwayTeam.Name}_{Match.Id}_{Match.Date}".Split(',')[0] + ".txt");
             string json = JsonConvert.SerializeObject(Match);
+            if (System.IO.File.Exists(matchResultJsonFilePath))
+                System.IO.File.Delete(matchResultJsonFilePath);
             System.IO.File.WriteAllText(matchResultJsonFilePath, json);
             sharingFiles.Add(Android.Net.Uri.FromFile(new File(matchResultJsonFilePath)));
 
@@ -206,9 +202,6 @@ namespace CricketScoreSheet.Screens
                         matchActivity.SetFlags(ActivityFlags.NewTask | ActivityFlags.ClearTask);
                         StartActivity(matchActivity);
                     }
-                    return true;
-                case Resource.Id.action_createfile:
-                    SetShareIntent(CreateShareIntent());
                     return true;
                 case Resource.Id.action_score:
                     Intent intent = new Intent(this.BaseContext, typeof(ScoreActivity));

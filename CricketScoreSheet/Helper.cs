@@ -53,5 +53,12 @@ namespace CricketScoreSheet
             intent.SetDataAndType(uri, "image/*");
             return intent;
         }
+
+        public static string ConvertBallstoOvers(int balls)
+        {
+            int hb;
+            int ho = Math.DivRem(balls, 6, out hb);
+            return ho + "." + hb;
+        }
     }
 }
