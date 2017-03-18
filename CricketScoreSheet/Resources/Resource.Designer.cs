@@ -3631,26 +3631,29 @@ namespace CricketScoreSheet
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f090045
-			public const int AdUnitId = 2131296325;
-			
 			// aapt resource value: 0x7f090044
 			public const int ApplicationName = 2131296324;
 			
-			// aapt resource value: 0x7f090048
-			public const int BatsmanStats = 2131296328;
-			
 			// aapt resource value: 0x7f090049
-			public const int BowlerStats = 2131296329;
-			
-			// aapt resource value: 0x7f090046
-			public const int CompletedMatches = 2131296326;
+			public const int BatsmanStats = 2131296329;
 			
 			// aapt resource value: 0x7f09004a
-			public const int Menu = 2131296330;
+			public const int BowlerStats = 2131296330;
 			
 			// aapt resource value: 0x7f090047
-			public const int SavedMatches = 2131296327;
+			public const int CompletedMatches = 2131296327;
+			
+			// aapt resource value: 0x7f09004b
+			public const int Menu = 2131296331;
+			
+			// aapt resource value: 0x7f090046
+			public const int ProdAdUnitId = 2131296326;
+			
+			// aapt resource value: 0x7f090048
+			public const int SavedMatches = 2131296328;
+			
+			// aapt resource value: 0x7f090045
+			public const int TestAdUnitId = 2131296325;
 			
 			// aapt resource value: 0x7f090023
 			public const int abc_action_bar_home_description = 2131296291;
@@ -3748,26 +3751,26 @@ namespace CricketScoreSheet
 			// aapt resource value: 0x7f090000
 			public const int accept = 2131296256;
 			
-			// aapt resource value: 0x7f09004d
-			public const int action_addbatsman = 2131296333;
-			
 			// aapt resource value: 0x7f09004e
-			public const int action_addbowler = 2131296334;
-			
-			// aapt resource value: 0x7f09004c
-			public const int action_addplayer = 2131296332;
-			
-			// aapt resource value: 0x7f090050
-			public const int action_help = 2131296336;
-			
-			// aapt resource value: 0x7f090051
-			public const int action_other = 2131296337;
-			
-			// aapt resource value: 0x7f09004b
-			public const int action_score = 2131296331;
+			public const int action_addbatsman = 2131296334;
 			
 			// aapt resource value: 0x7f09004f
-			public const int action_search = 2131296335;
+			public const int action_addbowler = 2131296335;
+			
+			// aapt resource value: 0x7f09004d
+			public const int action_addplayer = 2131296333;
+			
+			// aapt resource value: 0x7f090051
+			public const int action_help = 2131296337;
+			
+			// aapt resource value: 0x7f090052
+			public const int action_other = 2131296338;
+			
+			// aapt resource value: 0x7f09004c
+			public const int action_score = 2131296332;
+			
+			// aapt resource value: 0x7f090050
+			public const int action_search = 2131296336;
 			
 			// aapt resource value: 0x7f09001b
 			public const int appbar_scrolling_view_behavior = 2131296283;

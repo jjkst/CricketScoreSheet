@@ -49,7 +49,7 @@ namespace CricketScoreSheet.Screens
 
         void OnItemClick(object sender, int matchId)
         {
-            var FinalAd = AdWrapper.ConstructFullPageAdd(this.Activity, "ca-app-pub-3940256099942544/1033173712");
+            var FinalAd = AdWrapper.ConstructFullPageAdd(this.Activity, GetString(Resource.String.TestAdUnitId));
             var intlistener = new MyAdListener();
             intlistener.AdLoaded += () => { if (FinalAd.IsLoaded) FinalAd.Show(); };
             FinalAd.AdListener = intlistener;

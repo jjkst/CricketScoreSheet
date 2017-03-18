@@ -9,7 +9,7 @@
         android:textStyle="bold"
         android:textColor="@color/titlebar"
         android:gravity="left|center_vertical"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="35" />

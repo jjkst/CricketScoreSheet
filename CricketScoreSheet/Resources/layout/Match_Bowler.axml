@@ -2,15 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+	android:layout_marginRight="5dp">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+		android:layout_marginTop="2dp"
         android:background="@drawable/Style_TitleBar"
         android:weightSum="100">
         <TextView
             android:text="BOWLERS"
+            android:textStyle="bold"
             android:gravity="left|center_vertical"
             android:paddingLeft="5dp"
             android:layout_width="0dp"
@@ -18,30 +22,35 @@
             android:layout_weight="45" />
         <TextView
             android:text="O"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="10" />
         <TextView
             android:text="Dots"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="10" />
         <TextView
             android:text="R"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="10" />
         <TextView
             android:text="W"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="10" />
         <TextView
             android:text="Econ"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="match_parent"

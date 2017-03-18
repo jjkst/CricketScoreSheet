@@ -57,7 +57,7 @@ namespace CricketScoreSheet
             else
             {
                 ft.Add(Resource.Id.FrameLayout, new HomeFragment());
-                ft.AddToBackStack("home");
+                ft.AddToBackStack("home");                
             }
             ft.Commit();
         }
