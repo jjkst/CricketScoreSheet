@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using CricketScoreSheet.Shared.Models;
+using Android.Support.V4.Content;
 
 namespace CricketScoreSheet.Adapters
 {
@@ -36,8 +37,9 @@ namespace CricketScoreSheet.Adapters
             BatsmanStatsViewHolder vh = holder as BatsmanStatsViewHolder;
 
             vh?.ItemView.SetBackgroundColor(position % 2 == 1
-                ? vh.ItemView.Resources.GetColor(Resource.Color.rowtwo)
-                : vh.ItemView.Resources.GetColor(Resource.Color.rowone));
+                            ? new Android.Graphics.Color(ContextCompat.GetColor(holder.ItemView.Context, Resource.Color.rowtwo))
+                            : new Android.Graphics.Color(ContextCompat.GetColor(holder.ItemView.Context, Resource.Color.rowone)));
+
 
             vh.BatsmanName.Text = _mPlayers[position].PlayerName;
             vh.Matches.Text = _mPlayers[position].Matches.ToString();

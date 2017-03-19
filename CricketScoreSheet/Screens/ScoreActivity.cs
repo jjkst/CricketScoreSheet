@@ -18,7 +18,8 @@ using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace CricketScoreSheet.Screens
 {
-    [Activity(Label = "Score", Theme = "@style/MyTheme")]
+    [Activity(Label = "Score", Theme = "@style/MyTheme"
+        , ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class ScoreActivity : AppCompatActivity, RadioGroup.IOnCheckedChangeListener
     {
         private Spinner mActiveBatsman;

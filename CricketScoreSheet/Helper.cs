@@ -54,6 +54,12 @@ namespace CricketScoreSheet
             return intent;
         }
 
+        public static void SavePdfFile(string filename, Byte[] bytes)
+        {
+            string docpath = System.IO.Path.Combine(DownloadPath, filename);
+            System.IO.File.WriteAllBytes(docpath, bytes);
+        }
+
         public static string ConvertBallstoOvers(int balls)
         {
             int hb;

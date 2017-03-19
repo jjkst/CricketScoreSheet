@@ -21,14 +21,14 @@ using Java.Lang;
 
 namespace CricketScoreSheet.Screens
 {
-    [Activity(Label = "Current Match", Theme = "@style/MyTheme")]
+    [Activity(Label = "Current Match", Theme = "@style/MyTheme"
+        , ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class CurrentMatchActivity : AppCompatActivity, RadioGroup.IOnCheckedChangeListener
     {
         private RadioGroup mCurrentInnings;
         private RadioButton mHometeaminnings;
         private RadioButton mAwayteaminnings;
 
-        private Android.Support.V7.Widget.ShareActionProvider mShareActionProvider;
         private Match Match { get; set; }
         private int MatchId { get; set; }
         private int BattingteamId { get; set; }
@@ -53,6 +53,8 @@ namespace CricketScoreSheet.Screens
             // Initialize toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
+            SupportActionBar.Title = (Match.HomeTeam.Id == BattingteamId)
+                ? Match.HomeTeam.Name : Match.AwayTeam.Name;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
@@ -97,15 +99,13 @@ namespace CricketScoreSheet.Screens
             List<PlayerEntity> bowlers;
             if (BattingteamId == Match.HomeTeam.Id)
             {
-                mHometeaminnings.Checked = true;
-                SupportActionBar.Title = Match.HomeTeam.Name + " Innings";
+                mHometeaminnings.Checked = true;                
                 batsman = Match.HomeTeam.Players;
                 bowlers = Match.AwayTeam.Players;                
             }
             else
             {
                 mAwayteaminnings.Checked = true;
-                SupportActionBar.Title = Match.AwayTeam.Name + " Innings";
                 batsman = Match.AwayTeam.Players;
                 bowlers = Match.HomeTeam.Players;                
             }
@@ -140,8 +140,8 @@ namespace CricketScoreSheet.Screens
             {
                 MenuInflater.Inflate(Resource.Menu.menu_share, menu);
                 var shareItem = menu.FindItem(Resource.Id.action_share);
-                mShareActionProvider = (Android.Support.V7.Widget.ShareActionProvider)MenuItemCompat.GetActionProvider(shareItem);
-                SetShareIntent(CreateShareIntent());
+                var mShareActionProvider = (Android.Support.V7.Widget.ShareActionProvider)MenuItemCompat.GetActionProvider(shareItem);
+                mShareActionProvider.SetShareIntent(CreateShareIntent());
             }                
             else
             {
@@ -176,12 +176,6 @@ namespace CricketScoreSheet.Screens
             myShareIntent.PutParcelableArrayListExtra(Intent.ExtraStream, sharingFiles);
 
             return myShareIntent;
-        }
-
-        // Call to update the share intent
-        private void SetShareIntent(Intent shareIntent)
-        {
-            mShareActionProvider?.SetShareIntent(shareIntent);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

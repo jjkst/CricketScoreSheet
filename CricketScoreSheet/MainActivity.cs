@@ -8,19 +8,25 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using CricketScoreSheet.Screens;
 using CricketScoreSheet.Shared.Services;
+using Android.Content.Res;
+using Java.IO;
+using System.IO;
+using Android.Net;
+using Android.Content;
 
 namespace CricketScoreSheet
 {
-    [Activity(Label = "Circket Score Sheet", Theme = "@style/MyTheme", MainLauncher = true, Icon = "@drawable/ic_launcher")]
+    [Activity(Label = "Circket Score Sheet", Theme = "@style/MyTheme", MainLauncher = true, Icon = "@drawable/ic_launcher"
+        , ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MainActivity : AppCompatActivity
     { 
         public ActionBarDrawerToggle DrawerToggle;
         private DrawerLayout mDrawerLayout;
-        private Access Access;
+        private Shared.Services.Access Access;
 
         public MainActivity()
         {
-            Access = new Access();
+            Access = new Shared.Services.Access();
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -60,6 +66,7 @@ namespace CricketScoreSheet
                 ft.AddToBackStack("home");                
             }
             ft.Commit();
+
         }
 
         private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
@@ -104,6 +111,25 @@ namespace CricketScoreSheet
             {
                 case Android.Resource.Id.Home:
                     OnBackPressed();
+                    return true;
+                case Resource.Id.action_help:
+                    // Copy pdf file to external drive
+                    var filename = "pdf.pdf";
+                    Java.IO.File pdfFile = new Java.IO.File(Helper.DownloadPath, filename);
+                    if (!pdfFile.Exists())
+                    {
+                        AssetManager assetManager = Assets;
+                        var inputstream = assetManager.Open(filename);
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            inputstream.CopyTo(memoryStream);
+                            Helper.SavePdfFile(filename, memoryStream.ToArray());
+                        }
+                    }                    
+                    Uri path = Uri.FromFile(pdfFile);
+                    Intent pdfIntent = new Intent(Intent.ActionView);
+                    pdfIntent.SetDataAndType(path, "application/pdf");
+                    StartActivity(pdfIntent);                        
                     return true;
                 default:
                     return base.OnOptionsItemSelected(item);
