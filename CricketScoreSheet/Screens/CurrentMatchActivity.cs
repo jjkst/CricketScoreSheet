@@ -1,23 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.V4.View;
+using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.App;
 using CricketScoreSheet.Shared.DataAccess.Entities;
 using CricketScoreSheet.Shared.Models;
 using CricketScoreSheet.Shared.Services;
-using Newtonsoft.Json;
-using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using Java.IO;
-using Java.Lang;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace CricketScoreSheet.Screens
 {
@@ -46,15 +41,12 @@ namespace CricketScoreSheet.Screens
             SetContentView(Resource.Layout.Match);
             MatchId = Intent.GetIntExtra("MatchId", 1);
             Match = Access.MatchService.GetMatch(MatchId);
-
             BattingteamId = Intent.GetIntExtra("BattingTeamId", Match.HomeTeam.Id);
             BowlingteamId = Intent.GetIntExtra("BowlingTeamId", Match.AwayTeam.Id);
 
             // Initialize toolbar
             var toolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            SupportActionBar.Title = (Match.HomeTeam.Id == BattingteamId)
-                ? Match.HomeTeam.Name : Match.AwayTeam.Name;
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
@@ -80,7 +72,9 @@ namespace CricketScoreSheet.Screens
         protected override void OnStart()
         {
             base.OnStart();
-            Match = Access.MatchService.GetMatch(MatchId);     
+            Match = Access.MatchService.GetMatch(MatchId);
+            SupportActionBar.Title = (Match.HomeTeam.Id == BattingteamId
+                        ? Match.HomeTeam.Name : Match.AwayTeam.Name) + " Innings";
         }
 
         protected override void OnResume()
@@ -131,6 +125,8 @@ namespace CricketScoreSheet.Screens
                     BowlingteamId = Match.HomeTeam.Id;
                     break;
             }
+            SupportActionBar.Title = (Match.HomeTeam.Id == BattingteamId
+            ? Match.HomeTeam.Name : Match.AwayTeam.Name) + " Innings";
             ReplaceFragments();
         }
 
@@ -140,12 +136,17 @@ namespace CricketScoreSheet.Screens
             {
                 MenuInflater.Inflate(Resource.Menu.menu_share, menu);
                 var shareItem = menu.FindItem(Resource.Id.action_share);
-                var mShareActionProvider = (Android.Support.V7.Widget.ShareActionProvider)MenuItemCompat.GetActionProvider(shareItem);
-                mShareActionProvider.SetShareIntent(CreateShareIntent());
+                if(shareItem != null)
+                {
+                    var mShareActionProvider = (Android.Support.V7.Widget.ShareActionProvider)
+                        MenuItemCompat.GetActionProvider(shareItem);
+                    mShareActionProvider.SetShareIntent(CreateShareIntent());
+                }
+
             }                
             else
             {
-                MenuInflater.Inflate(Resource.Menu.menu_score, menu);
+                MenuInflater.Inflate(Resource.Menu.menu_addplayers, menu);
             }
 
             return base.OnCreateOptionsMenu(menu);
@@ -153,6 +154,8 @@ namespace CricketScoreSheet.Screens
 
         private Intent CreateShareIntent()
         {
+            if (!Match.HomeTeam.Players.Any() || !Match.AwayTeam.Players.Any())
+                return null;
             List<IParcelable> sharingFiles = new List<IParcelable>();
 
             var matchResultHtmlFilePath = System.IO.Path.Combine(Helper.DownloadPath,
@@ -197,16 +200,9 @@ namespace CricketScoreSheet.Screens
                         StartActivity(matchActivity);
                     }
                     return true;
-                case Resource.Id.action_score:
-                    Intent intent = new Intent(this.BaseContext, typeof(ScoreActivity));
-                    intent.PutExtra("MatchId", Match.Id);
-                    intent.PutExtra("BattingTeamId", BattingteamId);
-                    intent.PutExtra("BowlingTeamId", BowlingteamId);
-                    StartActivity(intent);
-                    return true;
                 case Resource.Id.action_addplayer:
                     PopupMenu popmenu = new PopupMenu(this, FindViewById(Resource.Id.action_addplayer));
-                    popmenu.Inflate(Resource.Menu.menu_addplayer);
+                    popmenu.Inflate(Resource.Menu.menulist_addplayers);
                     popmenu.MenuItemClick += Popmenu_MenuItemClick;
                     popmenu.Show();
                     return true;

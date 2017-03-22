@@ -76,19 +76,5 @@ namespace CricketScoreSheet.Screens
             mRecyclerViewBatsman.SetAdapter(batsmanAdapter);
         }
 
-        public void SetRecyclerViewLayoutManager(RecyclerView recyclerView)
-        {
-            int scrollPosition = 0;
-            // If a layout manager has already been set, get current scroll position.
-            if (recyclerView.GetLayoutManager() != null)
-            {
-                scrollPosition =
-                        ((LinearLayoutManager)recyclerView.GetLayoutManager()).FindFirstCompletelyVisibleItemPosition();
-            }
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.Activity);
-            recyclerView.SetLayoutManager(linearLayoutManager);
-            recyclerView.ScrollToPosition(scrollPosition);
-        }
     }
 }

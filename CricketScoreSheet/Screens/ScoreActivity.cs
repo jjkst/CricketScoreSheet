@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
+using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.App;
 using CricketScoreSheet.Adapters;
 using CricketScoreSheet.Shared.Models;
 using CricketScoreSheet.Shared.Services;
 using CricketScoreSheet.Shared.Validation;
+using System;
+using System.Linq;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace CricketScoreSheet.Screens
@@ -42,8 +38,11 @@ namespace CricketScoreSheet.Screens
 
         private int MatchId;
         private Match Match;
+        private int TeamId;
         private int BattingteamId;
         private int BowlingteamId;
+        private int PlayerId;
+        private string Play;
         private Ball ThisBall;
         private Access Access;
 
@@ -65,8 +64,9 @@ namespace CricketScoreSheet.Screens
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
             MatchId = Intent.GetIntExtra("MatchId", 1);
-            BattingteamId = Intent.GetIntExtra("BattingTeamId", 1);
-            BowlingteamId = Intent.GetIntExtra("BowlingTeamId", 1);
+            TeamId = Intent.GetIntExtra("TeamId", 1);
+            PlayerId = Intent.GetIntExtra("PlayerId", 1);
+            Play = Intent.GetStringExtra("Play");                  
             ThisBall = new Ball();
 
             // Active Players
@@ -76,6 +76,8 @@ namespace CricketScoreSheet.Screens
             mActiveBowler.ItemSelected += ActiveBowler_ItemSelected;
             mFielder_Keeper = FindViewById<Spinner>(Resource.Id.fielder);
             mFielder_Keeper.ItemSelected += Fielder_Keeper_ItemSelected;
+
+            
 
             // Score and wickets
             mRunsWickets1 = FindViewById<RadioGroup>(Resource.Id.runswickets1);
@@ -120,24 +122,36 @@ namespace CricketScoreSheet.Screens
             Team battingTeam;
             Team bowlingTeam;
 
-            if (BattingteamId == Match.HomeTeam.Id)
+            if ((Play == "Batsman" && Match.HomeTeam.Id == TeamId) 
+                || (Play == "Bowler" && Match.AwayTeam.Id == TeamId))
             {
+                BattingteamId = Match.HomeTeam.Id;
+                BowlingteamId = Match.AwayTeam.Id;
                 battingTeam = Match.HomeTeam;
                 bowlingTeam = Match.AwayTeam;
             }
-            else
+            else 
             {
+                BattingteamId = Match.AwayTeam.Id;
+                BowlingteamId = Match.HomeTeam.Id;
                 battingTeam = Match.AwayTeam;
                 bowlingTeam = Match.HomeTeam;
             }
 
             SupportActionBar.Title = battingTeam.Name + " Innings";
-            var batsmanAdapter = new SpinnerAdapter(this, Resource.Layout.Row,
-                        battingTeam.Players.Where(o => o.HowOut == "not out").Select(p => p.Name).ToArray());
+
+            var batsman = battingTeam.Players.Where(o => o.HowOut == "not out").Select(p => new {p.Id, p.Name});
+            var batsmanAdapter = new SpinnerAdapter(this, Resource.Layout.Row, batsman.Select(x=>x.Name).ToArray());
             mActiveBatsman.Adapter = batsmanAdapter;
-            var bowlerAdapter = new SpinnerAdapter(this, Resource.Layout.Row,
-                        bowlingTeam.Players.Select(b => b.Name).ToArray());
+            if (Play == "Batsman") 
+                mActiveBatsman.SetSelection(Array.IndexOf(batsman.Select(i=>i.Id).ToArray(), PlayerId));
+
+            var bowler = bowlingTeam.Players.Select(b => new { b.Id, b.Name });
+            var bowlerAdapter = new SpinnerAdapter(this, Resource.Layout.Row, bowler.Select(x => x.Name).ToArray());
             mActiveBowler.Adapter = bowlerAdapter;
+            if (Play == "Bowler")
+                mActiveBowler.SetSelection(Array.IndexOf(bowler.Select(i => i.Id).ToArray(), PlayerId));
+
             mFielder_Keeper.Adapter = bowlerAdapter;
         }
 

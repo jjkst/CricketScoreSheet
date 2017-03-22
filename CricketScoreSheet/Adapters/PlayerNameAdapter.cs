@@ -22,7 +22,7 @@ namespace CricketScoreSheet.Adapters
 
         public PlayerNameAdapter(List<PlayerEntity> matchplayers)
         {
-            _mPlayers = matchplayers;
+            _mPlayers = matchplayers.OrderByDescending(p=>p.Id).ToList();
         }
 
         public override int ItemCount => _mPlayers.Count;

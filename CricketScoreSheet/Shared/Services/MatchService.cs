@@ -378,7 +378,7 @@ namespace CricketScoreSheet.Shared.Services
                     $@"<tr>
                         <td colspan=""2"" class=""data"">{bowler.Name}</td>
                         <td class=""data textcenter"">{overs}</td>
-                        <td class=""data textcenter"">{bowler.Dots}</td>
+                        <td class=""data textcenter"">{bowler.Maiden}</td>
                         <td class=""data textcenter"">{bowler.RunsGiven}</td>
                         <td class=""data textcenter"">{bowler.Wickets}</td>
                         <td class=""data textcenter"">{econ}</td>
@@ -435,7 +435,7 @@ namespace CricketScoreSheet.Shared.Services
                     $@"<tr>
                         <td colspan=""2"" class=""data"">{sbowler.Name}</td>
                         <td class=""data textcenter"">{overs}</td>
-                        <td class=""data textcenter"">{sbowler.Dots}</td>
+                        <td class=""data textcenter"">{sbowler.Maiden}</td>
                         <td class=""data textcenter"">{sbowler.RunsGiven}</td>
                         <td class=""data textcenter"">{sbowler.Wickets}</td>
                         <td class=""data textcenter"">{econ}</td>

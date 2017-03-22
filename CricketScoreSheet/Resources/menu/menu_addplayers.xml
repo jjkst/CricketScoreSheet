@@ -1,11 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-
-  <item android:id="@+id/action_score"
-        android:icon="@drawable/action_score"
-        android:title="@string/action_score"
-        app:showAsAction="always" />
   <item android:id="@+id/action_addplayer"
         android:icon="@drawable/action_addplayer"
         android:title="@string/action_addplayer"

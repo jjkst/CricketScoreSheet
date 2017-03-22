@@ -31,7 +31,7 @@ namespace CricketScoreSheet.Shared.DataAccess.Entities
 
         public int Wickets { get; set; }
 
-        public int Dots { get; set; }
+        public int Maiden { get; set; }
 
         public int NoBalls { get; set; }
 
@@ -40,6 +40,10 @@ namespace CricketScoreSheet.Shared.DataAccess.Entities
         public int Catches { get; set; }
 
         public int Stumpings { get; set; }
+
+        public int Thisoverballs { get; set; }
+
+        public bool Thisoverruns { get; set; }
 
     }
 }

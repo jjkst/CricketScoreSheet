@@ -72,9 +72,13 @@ namespace CricketScoreSheet
         private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
         {
             var ft = FragmentManager.BeginTransaction();
+            var prevFragment = FragmentManager.FindFragmentById(Resource.Id.FrameLayout);
+            ft.Remove(prevFragment);
+
             switch (e.MenuItem.ItemId)
             {
                 case (Resource.Id.nav_home):
+                    SupportActionBar.SetTitle(Resource.String.ApplicationName);
                     ft.Replace(Resource.Id.FrameLayout, new HomeFragment());
                     break;
                 case (Resource.Id.nav_matchresults):
@@ -138,7 +142,6 @@ namespace CricketScoreSheet
 
         protected override void OnResume()
         {
-            SupportActionBar.SetTitle(Resource.String.ApplicationName);
             base.OnResume();
         }
 

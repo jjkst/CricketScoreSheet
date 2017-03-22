@@ -44,7 +44,7 @@ namespace CricketScoreSheet.Adapters
             vh.BowlerWickets.Text = _mPlayers[position].Wickets.ToString();
             vh.BowlerEcon.Text = (_mPlayers[position].BallsBowled == 0) ? "0" :
                 (decimal.Round((decimal)_mPlayers[position].RunsGiven / Convert.ToDecimal(overs), 2, MidpointRounding.AwayFromZero)).ToString();
-            vh.BowlerDots.Text = _mPlayers[position].Dots.ToString();
+            vh.BowlerDots.Text = _mPlayers[position].Maiden.ToString();
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

@@ -39,7 +39,7 @@
     <AotAssemblies>False</AotAssemblies>
     <EnableLLVM>False</EnableLLVM>
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
-    <EnableProguard>True</EnableProguard>
+    <EnableProguard>False</EnableProguard>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,7 +50,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
     <BundleAssemblies>False</BundleAssemblies>
@@ -60,6 +60,7 @@
     <EnableLLVM>False</EnableLLVM>
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <EnableProguard>False</EnableProguard>
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -214,7 +215,9 @@
     <AndroidResource Include="Resources\layout\BatsmanStatsRow.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\BowlerStats.axml" />
+    <AndroidResource Include="Resources\layout\BowlerStats.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\BowlerStatsRow.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -222,10 +225,14 @@
     <AndroidResource Include="Resources\layout\DialogRunout.axml" />
     <AndroidResource Include="Resources\layout\HeaderDrawerLayout.axml" />
     <AndroidResource Include="Resources\layout\Home.axml" />
-    <AndroidResource Include="Resources\layout\Match.axml" />
+    <AndroidResource Include="Resources\layout\Match.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\Match_Batsman.axml" />
     <AndroidResource Include="Resources\layout\Match_BatsmanRow.axml" />
-    <AndroidResource Include="Resources\layout\Match_Bowler.axml" />
+    <AndroidResource Include="Resources\layout\Match_Bowler.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\Match_BowlerRow.axml" />
     <AndroidResource Include="Resources\layout\Matches.axml" />
     <AndroidResource Include="Resources\layout\Matches_NoAppBar.axml" />
@@ -233,7 +240,9 @@
     <AndroidResource Include="Resources\layout\NewGame.axml" />
     <AndroidResource Include="Resources\layout\PlayerNameRow_ViewDelete.axml" />
     <AndroidResource Include="Resources\layout\Row.axml" />
-    <AndroidResource Include="Resources\layout\Score.axml" />
+    <AndroidResource Include="Resources\layout\Score.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Main.axml">
@@ -357,13 +366,13 @@
     <AndroidResource Include="Resources\menu\menu.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\menu_addplayer.xml" />
+    <AndroidResource Include="Resources\menu\menulist_addplayers.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\menu_navigation.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\menu_score.xml" />
+    <AndroidResource Include="Resources\menu\menu_addplayers.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\menu_share.xml" />

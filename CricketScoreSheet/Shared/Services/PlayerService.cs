@@ -44,7 +44,7 @@ namespace CricketScoreSheet.Shared.Services
                 RunsGiven = 0,
                 BallsBowled = 0,
                 Wickets = 0,
-                Dots = 0,
+                Maiden = 0,
                 NoBalls = 0,
                 Wides = 0,
                 Catches = 0,
@@ -171,7 +171,12 @@ namespace CricketScoreSheet.Shared.Services
             player.RunsGiven = player.RunsGiven + value.RunsGiven;
             player.BallsBowled = player.BallsBowled + value.BallBowled;
             player.Wickets = player.Wickets + value.WicketsTaken;
-            player.Dots = player.Dots + (player.RunsGiven == 0 ? 1 : 0);
+
+            player.Thisoverballs = (player.Thisoverballs < 6 ? player.Thisoverballs : 0) + 
+                (player.BallsBowled == 0 ? 0 : 1);
+            player.Thisoverruns = (player.RunsGiven == 0) ? false : true;
+            player.Maiden = player.Maiden + ((player.Thisoverballs == 6 && !player.Thisoverruns) ? 1 : 0);
+
             player.Wides = player.Wides + value.Wides;
             player.NoBalls = player.NoBalls + value.Noballs;
 
@@ -201,6 +206,14 @@ namespace CricketScoreSheet.Shared.Services
             var player = currentPlayers.Where(p => p.Name == value.BowlerName).FirstOrDefault();
             if (player.BallsBowled > 0)
             {
+                if(player.Maiden > 0)
+                {
+                    player.Thisoverballs = (player.Thisoverballs < 6 ? player.Thisoverballs : 0) +
+                            (player.BallsBowled == 0 ? 0 : player.BallsBowled);
+                    player.Thisoverruns = (player.RunsGiven == 0) ? false : true;
+                    player.Maiden = player.Maiden - ((player.Thisoverballs == 6 && !player.Thisoverruns) ? 1 : 0);
+                }
+
                 player.RunsGiven = player.RunsGiven - value.RunsGiven;
                 player.BallsBowled = player.BallsBowled - value.BallBowled;
                 player.Wickets = player.Wickets - value.WicketsTaken;

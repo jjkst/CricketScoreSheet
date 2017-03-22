@@ -105,8 +105,8 @@ namespace CricketScoreSheet.Screens
                 case Android.Resource.Id.Home:
                     var currentMatchActivity = new Intent(this, typeof(CurrentMatchActivity));
                     currentMatchActivity.PutExtra("MatchId", MatchId);
-                    currentMatchActivity.GetIntExtra("BattingTeamId", BattingTeamId);
-                    currentMatchActivity.GetIntExtra("BowlingTeamId", BowlingTeamId);
+                    currentMatchActivity.PutExtra("BattingTeamId", BattingTeamId);
+                    currentMatchActivity.PutExtra("BowlingTeamId", BowlingTeamId);
                     StartActivity(currentMatchActivity);
                     return true;
                 default:

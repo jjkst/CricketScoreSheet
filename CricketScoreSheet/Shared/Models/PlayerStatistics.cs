@@ -1,15 +1,7 @@
+using CricketScoreSheet.Shared.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using CricketScoreSheet.Shared.DataAccess.Entities;
 
 namespace CricketScoreSheet.Shared.Models
 {
@@ -41,7 +33,7 @@ namespace CricketScoreSheet.Shared.Models
 
         public int BallsBowled { get; set; }
 
-        public int Dots { get; set; }
+        public int Maiden { get; set; }
 
         public int RunsGiven { get; set; }
 
@@ -83,8 +75,8 @@ namespace CricketScoreSheet.Shared.Models
             BallsBowled = players.Sum(p => p.BallsBowled);
             int ab; var ao = Math.DivRem(BallsBowled, 6, out ab);
             var overs = ao + "." + ab;
-            
-            Dots = players.Sum(p => p.Dots);
+
+            Maiden = players.Sum(p => p.Maiden);
             RunsGiven = players.Sum(p => p.RunsGiven);
             Wickets = players.Sum(p => p.Wickets);
             var playerBb = players.Where(s => s.Wickets == players.Max(w => w.Wickets))

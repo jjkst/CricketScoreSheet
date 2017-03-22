@@ -2466,14 +2466,14 @@ namespace CricketScoreSheet
 			// aapt resource value: 0x7f0a00d1
 			public const int action0 = 2131362001;
 			
-			// aapt resource value: 0x7f0a010d
-			public const int action_addbatsman = 2131362061;
-			
-			// aapt resource value: 0x7f0a010e
-			public const int action_addbowler = 2131362062;
+			// aapt resource value: 0x7f0a0114
+			public const int action_addbatsman = 2131362068;
 			
 			// aapt resource value: 0x7f0a0115
-			public const int action_addplayer = 2131362069;
+			public const int action_addbowler = 2131362069;
+			
+			// aapt resource value: 0x7f0a010d
+			public const int action_addplayer = 2131362061;
 			
 			// aapt resource value: 0x7f0a006b
 			public const int action_bar = 2131361899;
@@ -2526,11 +2526,8 @@ namespace CricketScoreSheet
 			// aapt resource value: 0x7f0a004a
 			public const int action_mode_close_button = 2131361866;
 			
-			// aapt resource value: 0x7f0a0114
-			public const int action_score = 2131362068;
-			
-			// aapt resource value: 0x7f0a0116
-			public const int action_share = 2131362070;
+			// aapt resource value: 0x7f0a0113
+			public const int action_share = 2131362067;
 			
 			// aapt resource value: 0x7f0a00d0
 			public const int action_text = 2131362000;
@@ -2685,8 +2682,8 @@ namespace CricketScoreSheet
 			// aapt resource value: 0x7f0a0106
 			public const int clear = 2131362054;
 			
-			// aapt resource value: 0x7f0a0113
-			public const int clearstorage = 2131362067;
+			// aapt resource value: 0x7f0a0112
+			public const int clearstorage = 2131362066;
 			
 			// aapt resource value: 0x7f0a0022
 			public const int clip_horizontal = 2131361826;
@@ -2946,17 +2943,17 @@ namespace CricketScoreSheet
 			// aapt resource value: 0x7f0a008b
 			public const int name_bowler = 2131361931;
 			
-			// aapt resource value: 0x7f0a0111
-			public const int nav_batsmanstats = 2131362065;
+			// aapt resource value: 0x7f0a0110
+			public const int nav_batsmanstats = 2131362064;
 			
-			// aapt resource value: 0x7f0a0112
-			public const int nav_bowlerstats = 2131362066;
+			// aapt resource value: 0x7f0a0111
+			public const int nav_bowlerstats = 2131362065;
+			
+			// aapt resource value: 0x7f0a010e
+			public const int nav_home = 2131362062;
 			
 			// aapt resource value: 0x7f0a010f
-			public const int nav_home = 2131362063;
-			
-			// aapt resource value: 0x7f0a0110
-			public const int nav_matchresults = 2131362064;
+			public const int nav_matchresults = 2131362063;
 			
 			// aapt resource value: 0x7f0a00ac
 			public const int nav_view = 2131361964;
@@ -3613,16 +3610,16 @@ namespace CricketScoreSheet
 			public const int menu = 2131623936;
 			
 			// aapt resource value: 0x7f0e0001
-			public const int menu_addplayer = 2131623937;
+			public const int menu_addplayers = 2131623937;
 			
 			// aapt resource value: 0x7f0e0002
 			public const int menu_navigation = 2131623938;
 			
 			// aapt resource value: 0x7f0e0003
-			public const int menu_score = 2131623939;
+			public const int menu_share = 2131623939;
 			
 			// aapt resource value: 0x7f0e0004
-			public const int menu_share = 2131623940;
+			public const int menulist_addplayers = 2131623940;
 			
 			static Menu()
 			{

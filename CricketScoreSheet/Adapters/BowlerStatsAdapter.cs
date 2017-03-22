@@ -65,7 +65,7 @@ namespace CricketScoreSheet.Adapters
                 $"Team Name : { player.TeamName}",
                 $"Matches : { player.Matches}",
                 $"Balls Bowled : {player. BallsBowled}",
-                $"Dots : { player.Dots}",
+                $"Maidens : { player.Maiden}",
                 $"RunsGiven : {player. RunsGiven}",
                 $"Wickets : {player.Wickets}",
                 $"Five Wickets : {player.FWI}",

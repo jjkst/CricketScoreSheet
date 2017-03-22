@@ -33,5 +33,6 @@ namespace CricketScoreSheet.Shared.Models
         public Team AwayTeam { get; set; }
 
         public string WinningTeamName { get; set; }
+
     }
 }

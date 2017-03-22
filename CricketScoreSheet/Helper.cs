@@ -20,9 +20,11 @@ namespace CricketScoreSheet
         public static string DownloadPath
         {
             get
-            {
+            {                
                 string filePath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, "Android", "data",
-                     "CricketScoreSheet.CricketScoreSheet", "files");
+                     "com.jjkst.cricketscoresheet", "files");
+                if(!Directory.Exists(filePath))
+                    Directory.CreateDirectory(filePath);
                 return filePath;
             }
         }

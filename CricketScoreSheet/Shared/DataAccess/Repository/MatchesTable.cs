@@ -36,7 +36,7 @@ namespace CricketScoreSheet.Shared.DataAccess.Repository
         {
             try
             {
-                var query = Connection.ExecuteScalarAsync<int>("select count(*) from MatchEntity");
+                var query =  Connection.ExecuteScalarAsync<int>("select count(*) from MatchEntity");
                 return query.Result;
             }
             catch (AggregateException)
