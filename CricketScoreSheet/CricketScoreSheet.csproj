@@ -204,7 +204,7 @@
     <Compile Include="SQLiteAsync.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidAsset Include="Assets\pdf.pdf" />
+    <AndroidAsset Include="Assets\Help_CSS.pdf" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
