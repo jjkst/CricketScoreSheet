@@ -118,7 +118,7 @@ namespace CricketScoreSheet
                     return true;
                 case Resource.Id.action_help:
                     // Copy pdf file to external drive
-                    var filename = "pdf.pdf";
+                    var filename = "Help_CSS.pdf";
                     Java.IO.File pdfFile = new Java.IO.File(Helper.DownloadPath, filename);
                     if (!pdfFile.Exists())
                     {
