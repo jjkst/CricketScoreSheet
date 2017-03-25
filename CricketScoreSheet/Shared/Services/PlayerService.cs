@@ -48,7 +48,9 @@ namespace CricketScoreSheet.Shared.Services
                 NoBalls = 0,
                 Wides = 0,
                 Catches = 0,
-                Stumpings = 0
+                Stumpings = 0,
+                Thisoverballs = 0,
+                Thisoverruns = false
             };
 
             return PlayersTable.AddPlayer(player);
@@ -172,10 +174,13 @@ namespace CricketScoreSheet.Shared.Services
             player.BallsBowled = player.BallsBowled + value.BallBowled;
             player.Wickets = player.Wickets + value.WicketsTaken;
 
-            player.Thisoverballs = (player.Thisoverballs < 6 ? player.Thisoverballs : 0) + 
-                (player.BallsBowled == 0 ? 0 : 1);
-            player.Thisoverruns = (player.RunsGiven == 0) ? false : true;
-            player.Maiden = player.Maiden + ((player.Thisoverballs == 6 && !player.Thisoverruns) ? 1 : 0);
+            if (Helper.ConvertBallstoOvers(player.Thisoverballs).Split('.')[1] == "0") // Reset every last ball previous over
+                player.Thisoverruns = false;
+
+            player.Thisoverballs = player.Thisoverballs + value.BallBowled;
+            player.Thisoverruns = player.Thisoverruns ? player.Thisoverruns : 
+                (value.RunsTaken + value.Wides + value.Noballs == 0) ? false : true;
+            player.Maiden = player.Maiden + ((Helper.ConvertBallstoOvers(player.Thisoverballs).Split('.')[1] == "0" && !player.Thisoverruns) ? 1 : 0);
 
             player.Wides = player.Wides + value.Wides;
             player.NoBalls = player.NoBalls + value.Noballs;
@@ -206,14 +211,29 @@ namespace CricketScoreSheet.Shared.Services
             var player = currentPlayers.Where(p => p.Name == value.BowlerName).FirstOrDefault();
             if (player.BallsBowled > 0)
             {
-                if(player.Maiden > 0)
+                // Check last 6 balls if batsman is scored if score on 6th ball undo else dont do it
+                var match = Access.MatchService.GetMatch(matchId);
+                var team = (match.HomeTeam.Id == bowlingTeamId) ? 2 : 1;
+                var balls = (team == 1) ? Access.TeamOneBalls : Access.TeamTwoBalls;
+                player.Thisoverruns = false;
+                int i = 6;
+                foreach (var b in balls.Where(p=>p.BowlerName == player.Name).AsEnumerable().Reverse())
                 {
-                    player.Thisoverballs = (player.Thisoverballs < 6 ? player.Thisoverballs : 0) +
-                            (player.BallsBowled == 0 ? 0 : player.BallsBowled);
-                    player.Thisoverruns = (player.RunsGiven == 0) ? false : true;
-                    player.Maiden = player.Maiden - ((player.Thisoverballs == 6 && !player.Thisoverruns) ? 1 : 0);
+                    if (i == 0) break;
+                    if (b.RunsTaken > 0 || b.Wides > 0 || b.Noballs > 0)
+                    {
+                        player.Thisoverruns = true;
+                        break;
+                    }
+                    i = i - (b.BallBowled == 1 ? 1 : 0);
                 }
 
+                if (player.Maiden > 0)
+                {
+                    player.Maiden = player.Maiden - ((Helper.ConvertBallstoOvers(player.Thisoverballs).Split('.')[1] == "0" && !player.Thisoverruns) ? 1 : 0);
+                }
+
+                player.Thisoverballs = player.Thisoverballs - value.BallBowled;
                 player.RunsGiven = player.RunsGiven - value.RunsGiven;
                 player.BallsBowled = player.BallsBowled - value.BallBowled;
                 player.Wickets = player.Wickets - value.WicketsTaken;

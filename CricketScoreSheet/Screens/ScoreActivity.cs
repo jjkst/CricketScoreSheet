@@ -596,8 +596,7 @@ namespace CricketScoreSheet.Screens
             }
 
             var calcball = new CalcBall(ThisBall);
-            int team = 1;
-            if (Match.AwayTeam.Id == BattingteamId) team = 2;                        
+            var team = (Match.HomeTeam.Id == BattingteamId) ? 1 : 2;                    
             if (team == 1)
             {
                 Access.TeamOneBalls.Add(calcball);
