@@ -2,7 +2,7 @@
 <resources>
   <string name="ApplicationName">Cricket Score Sheet</string>  
   <string name="TestAdUnitId">ca-app-pub-3940256099942544/1033173712</string>  
-  <string name="ProdAdUnitId">ca-app-pub-7037035737845221~2035770793</string>  
+  <string name="ProdAdUnitId">ca-app-pub-7037035737845221/1756569198</string>  
   <string name="CompletedMatches">Completed Matches</string>
   <string name="SavedMatches">Saved Matches</string>
   <string name="BatsmanStats">Batsman Statistics</string>
