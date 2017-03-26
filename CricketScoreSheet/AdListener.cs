@@ -1,5 +1,4 @@
 using Android.Gms.Ads;
-using Android.Gms.Dynamite.Descriptors;
 
 namespace CricketScoreSheet
 {

@@ -559,7 +559,6 @@ namespace CricketScoreSheet.Screens
 
         private void ClearScore(object sender, EventArgs e)
         {
-            ThisBall = new Ball();
             mRunsWickets1.Check(Resource.Id.dot);
             ResetRadioGroup(mExtras1);
             ResetRadioGroup(mExtras2);
@@ -572,8 +571,6 @@ namespace CricketScoreSheet.Screens
         private void UpdateScore(object sender, EventArgs e)
         {
             if (!mFielder_Keeper.Enabled) ThisBall.Fielder = null;
-
-            //TODO : Handle Runout
 
             // Extras one
             if (ThisBall.Wide == 1)

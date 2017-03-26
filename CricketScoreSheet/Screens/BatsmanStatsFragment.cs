@@ -1,14 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-
 using Android.App;
 using Android.OS;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
 using CricketScoreSheet.Adapters;
-using CricketScoreSheet.Shared.Services;
 using CricketScoreSheet.Shared.Models;
+using CricketScoreSheet.Shared.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CricketScoreSheet.Screens
 {

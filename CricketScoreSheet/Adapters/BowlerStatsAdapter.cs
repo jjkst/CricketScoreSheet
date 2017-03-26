@@ -1,17 +1,11 @@
+using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
+using Android.Views;
+using Android.Widget;
+using CricketScoreSheet.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V7.Widget;
-using CricketScoreSheet.Shared.Models;
-using Android.Support.V4.Content;
 
 namespace CricketScoreSheet.Adapters
 {
@@ -22,14 +16,16 @@ namespace CricketScoreSheet.Adapters
 
         public BowlerStatsAdapter(List<PlayerStatistics> players)
         {
-            _mPlayers = players.OrderByDescending(w => w.Wickets).ToList(); 
+            _mPlayers = players.OrderByDescending(w => w.Wickets)
+                               .ThenByDescending(w=>w.BowlingAvg).ToList(); 
         }
 
         public override int ItemCount => _mPlayers.Count;
 
         public void UpdatedList(List<PlayerStatistics> searchedPlayers)
         {
-            _mPlayers = searchedPlayers.OrderByDescending(w => w.Wickets).ToList();
+            _mPlayers = searchedPlayers.OrderByDescending(w => w.Wickets)
+                                       .ThenByDescending(w => w.BowlingAvg).ToList();
         }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
@@ -39,7 +35,6 @@ namespace CricketScoreSheet.Adapters
             vh?.ItemView.SetBackgroundColor(position % 2 == 1
                             ? new Android.Graphics.Color(ContextCompat.GetColor(holder.ItemView.Context, Resource.Color.rowtwo))
                             : new Android.Graphics.Color(ContextCompat.GetColor(holder.ItemView.Context, Resource.Color.rowone)));
-
 
             vh.BowlerName.Text = _mPlayers[position].PlayerName;
             vh.Matches.Text = _mPlayers[position].Matches.ToString();

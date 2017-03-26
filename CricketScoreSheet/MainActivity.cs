@@ -1,18 +1,16 @@
 ﻿using Android.App;
-using Android.Widget;
+using Android.Content;
+using Android.Content.Res;
+using Android.Net;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Support.V4.Widget;
-using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Widget;
+using Android.Support.V7.App;
 using Android.Views;
 using CricketScoreSheet.Screens;
 using CricketScoreSheet.Shared.Services;
-using Android.Content.Res;
-using Java.IO;
 using System.IO;
-using Android.Net;
-using Android.Content;
+using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace CricketScoreSheet
 {

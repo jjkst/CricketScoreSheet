@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
@@ -37,6 +29,7 @@ namespace CricketScoreSheet.Adapters
             View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.Row, parent, false);
             TextView label = (TextView)itemView.FindViewById(Resource.Id.label);
             label.Text = objects[position];
+            label.SetTypeface(null, Android.Graphics.TypefaceStyle.BoldItalic);
             return itemView;
         }    
     }

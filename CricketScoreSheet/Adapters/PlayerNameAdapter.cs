@@ -1,17 +1,11 @@
+using Android.Support.V4.Content;
+using Android.Support.V7.Widget;
+using Android.Views;
+using Android.Widget;
+using CricketScoreSheet.Shared.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Android.Support.V7.Widget;
-using CricketScoreSheet.Shared.DataAccess.Entities;
-using Android.Support.V4.Content;
 
 namespace CricketScoreSheet.Adapters
 {
@@ -39,7 +33,6 @@ namespace CricketScoreSheet.Adapters
             vh?.ItemView.SetBackgroundColor(position % 2 == 1
                             ? new Android.Graphics.Color(ContextCompat.GetColor(holder.ItemView.Context, Resource.Color.rowtwo))
                             : new Android.Graphics.Color(ContextCompat.GetColor(holder.ItemView.Context, Resource.Color.rowone)));
-
 
             vh.PlayerName.Text = _mPlayers[position].Name;
         }

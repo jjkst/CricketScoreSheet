@@ -1,7 +1,7 @@
-using System;
 using Android.Content;
-using Android.Views;
 using Android.Graphics;
+using Android.Views;
+using System;
 using System.IO;
 using File = Java.IO.File;
 
