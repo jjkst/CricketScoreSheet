@@ -21,7 +21,7 @@
         android:layout_weight="5"
         android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -34,7 +34,7 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:paddingLeft="10dp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -47,7 +47,7 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:paddingLeft="10dp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -60,7 +60,7 @@
         android:layout_height="0dp"
         android:layout_weight="5"
         android:paddingLeft="10dp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold" />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="0dp"

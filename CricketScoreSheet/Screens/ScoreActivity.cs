@@ -593,15 +593,10 @@ namespace CricketScoreSheet.Screens
             }
 
             var calcball = new CalcBall(ThisBall);
-            var team = (Match.HomeTeam.Id == BattingteamId) ? 1 : 2;                    
-            if (team == 1)
-            {
+            if (Match.HomeTeam.Id == BattingteamId)
                 Access.TeamOneBalls.Add(calcball);
-            }
             else
-            {
-                Access.TeamTwoBalls.Add(calcball);
-            }
+                Access.TeamTwoBalls.Add(calcball);                    
 
             //Update score      
             if(Access.PlayerService.UpdateBatsmanThisBall(MatchId, BattingteamId, calcball)
@@ -669,19 +664,36 @@ namespace CricketScoreSheet.Screens
 
         private void UndoScore(object sender, EventArgs e)
         {
-            int team = 1;
-            if ( Access.MatchService.GetMatch(MatchId).AwayTeam.Id == BattingteamId) team = 2;
+            var currentMatch = Access.MatchService.GetMatch(MatchId);
+
             CalcBall undoBall = null;
-            if (team == 1 && Access.TeamOneBalls.Count > 0)
+            if (currentMatch.HomeTeam.Id == BattingteamId)
             {
-                undoBall = Access.TeamOneBalls[Access.TeamOneBalls.Count - 1];
-                Access.TeamOneBalls.RemoveAt(Access.TeamOneBalls.Count - 1);
+                if (currentMatch.HomeTeam.InningsComplete || Access.TeamOneBalls.Count <= 0)
+                {
+                    Toast.MakeText(this, $"{currentMatch.HomeTeam.Name} innings is complete or not started.", ToastLength.Long).Show();
+                    return;
+                }
+                else
+                {
+                    undoBall = Access.TeamOneBalls[Access.TeamOneBalls.Count - 1];
+                    Access.TeamOneBalls.RemoveAt(Access.TeamOneBalls.Count - 1);
+                }
             }
-            else if (team == 2 && Access.TeamTwoBalls.Count > 0)
+            else
             {
-                undoBall = Access.TeamTwoBalls[Access.TeamTwoBalls.Count - 1];
-                Access.TeamTwoBalls.RemoveAt(Access.TeamTwoBalls.Count - 1);
+                if (currentMatch.AwayTeam.InningsComplete || Access.TeamTwoBalls.Count <= 0)
+                {
+                    Toast.MakeText(this, $"{currentMatch.AwayTeam.Name} innings is complete or not started.", ToastLength.Long).Show();
+                    return;
+                }
+                else
+                {
+                    undoBall = Access.TeamTwoBalls[Access.TeamTwoBalls.Count - 1];
+                    Access.TeamTwoBalls.RemoveAt(Access.TeamTwoBalls.Count - 1);
+                }
             }
+
             if(Access.PlayerService.UndoBatsmanLastBall(MatchId, BattingteamId, undoBall)
                 && Access.PlayerService.UndoBowlerLastBall(MatchId, BowlingteamId, undoBall))
                 Access.MatchService.UndoTeamScore(MatchId, BattingteamId, undoBall);
