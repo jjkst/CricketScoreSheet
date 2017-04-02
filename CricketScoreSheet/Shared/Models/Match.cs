@@ -22,5 +22,9 @@ namespace CricketScoreSheet.Shared.Models
 
         public string WinningTeamName { get; set; }
 
+        public string UmpireOne { get; set; }
+
+        public string UmpireTwo { get; set; }
+
     }
 }

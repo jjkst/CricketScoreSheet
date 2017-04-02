@@ -36,7 +36,17 @@ namespace CricketScoreSheet.Adapters
             string awayteamovers = Helper.ConvertBallstoOvers(match.AwayTeam.Balls);
 
             if (vh == null) return;
-            vh.LineOne.Text = $"{match.Date}, at {match.Location}";
+            vh.LineOne.Text = $"{match.Date}{(string.IsNullOrEmpty(match.Location) ? "" : $", at {match.Location}")}";
+
+            var umpires = match.UmpireOne + (string.IsNullOrEmpty(match.UmpireTwo) ? "" : $", {match.UmpireTwo}");
+            if (string.IsNullOrEmpty(umpires.Trim()))
+            {
+                vh.LineUmpire.Visibility = ViewStates.Gone;
+            }
+            else
+            {
+                vh.LineUmpire.Text = vh.LineUmpire.Text + umpires.TrimEnd(',').TrimStart(',');
+            }
             vh.LineTwo.Text = $"{match.HomeTeam.Name} {match.HomeTeam.Runs}/{match.HomeTeam.Wickets} ({hometeamovers}/{match.TotalOvers}) " +
                               $"Extras (nb {match.HomeTeam.NoBalls}, w {match.HomeTeam.Wides}, b {match.HomeTeam.Byes},lb {match.HomeTeam.LegByes})";
             vh.LineThree.Text = $"{match.AwayTeam.Name} {match.AwayTeam.Runs}/{match.AwayTeam.Wickets} ({awayteamovers}/{match.TotalOvers}) " +
@@ -59,6 +69,7 @@ namespace CricketScoreSheet.Adapters
     public class MatchViewHolder : RecyclerView.ViewHolder
     {
         public TextView LineOne { get; }
+        public TextView LineUmpire { get; }
         public TextView LineTwo { get; }
         public TextView LineThree { get; }
         public TextView LineFour { get; }
@@ -67,6 +78,7 @@ namespace CricketScoreSheet.Adapters
             : base(itemView)
         {
             LineOne = itemView.FindViewById<TextView>(Resource.Id.lineone);
+            LineUmpire = itemView.FindViewById<TextView>(Resource.Id.lineumpire);
             LineTwo = itemView.FindViewById<TextView>(Resource.Id.linetwo);
             LineThree = itemView.FindViewById<TextView>(Resource.Id.linethree);
             LineFour = itemView.FindViewById<TextView>(Resource.Id.linefour);

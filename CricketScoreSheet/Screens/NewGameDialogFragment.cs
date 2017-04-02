@@ -18,11 +18,14 @@ namespace CricketScoreSheet.Screens
     {
         private List<string> mTeams = new List<string>();
         private List<string> Locations = new List<string>();
+        private List<string> Umpires = new List<string>();
         private string[] mOversArray;
 
         private Spinner mHomeTeamName;
         private Spinner mAwayTeamName;
         private Spinner mLocation;
+        private Spinner mUmpireOne;
+        private Spinner mUmpireTwo;
         private Spinner mOvers;
         private Button mCreateMatchBtn;
         private Access Access;
@@ -37,6 +40,9 @@ namespace CricketScoreSheet.Screens
             Locations.AddRange(new List<string> { "Select Ground/Location", "Add Ground/Location" });
             Locations.AddRange(Access.MatchService.GetMatches().Where(x=> !string.IsNullOrEmpty(x.Location))
                 .GroupBy(l => l.Location).Select(lo => lo.First().Location).ToList());
+
+            Umpires.AddRange(new List<string> { "Select Umpire", "Add Umpire" });
+            Umpires.AddRange(Access.UmpireService.GetUmpires().Select(u=>u.Name));
 
             mOversArray = new string[]{ "Ten10", "Twenty20", "ThirtyFive35", "Forty40", "Fifty50", "Custom"};
         }
@@ -63,15 +69,25 @@ namespace CricketScoreSheet.Screens
             mAwayTeamName.Adapter = adapter;
             mAwayTeamName.ItemSelected += setTeam;
 
+            // Set Overs            
+            mOvers = view.FindViewById<Spinner>(Resource.Id.overs);
+            mOvers.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.Row, mOversArray);
+            mOvers.ItemSelected += setOvers;
+
             // Set Location            
             mLocation = view.FindViewById<Spinner>(Resource.Id.location);
             mLocation.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.Row, Locations.ToArray());
             mLocation.ItemSelected += setLocation;
 
-            // Set Overs            
-            mOvers = view.FindViewById<Spinner>(Resource.Id.overs);
-            mOvers.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.Row, mOversArray);
-            mOvers.ItemSelected += setOvers;
+            // Set Umpire one            
+            mUmpireOne = view.FindViewById<Spinner>(Resource.Id.umpire1);
+            mUmpireOne.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.Row, Umpires.ToArray());
+            mUmpireOne.ItemSelected += setUmpires;
+
+            // Set Umpire two            
+            mUmpireTwo = view.FindViewById<Spinner>(Resource.Id.umpire2);
+            mUmpireTwo.Adapter = new SpinnerAdapter(this.Activity, Resource.Layout.Row, Umpires.ToArray());
+            mUmpireTwo.ItemSelected += setUmpires;
 
             // Create Match
             mCreateMatchBtn = view.FindViewById<Button>(Resource.Id.createMatchButton);
@@ -158,6 +174,50 @@ namespace CricketScoreSheet.Screens
             inputDialog.Show();
         }
 
+        private void setUmpires(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            DisableCreateMatchButtonIf();
+            if (e.Position != 1) return;
+            var inputDialog = new AlertDialog.Builder(this.Activity);
+            EditText userInput = new EditText(Activity);
+            userInput.InputType = InputTypes.ClassText;
+            inputDialog.SetTitle("Add Umpire (Optional):");
+            inputDialog.SetView(userInput);
+            inputDialog.SetPositiveButton(
+                "Ok",
+                (senderAlert, args) =>
+                {
+                    var umpireValid = new UmpireValidator(Access.UmpireService.GetUmpires()).Validate(userInput.Text);
+                    if (umpireValid.Any())
+                    {                       
+                        Toast.MakeText(this.Activity, string.Join(System.Environment.NewLine, umpireValid.ToArray()), ToastLength.Short)
+                            .Show();
+                        return;
+                    }
+                    else
+                    {
+                        Umpires.Add(userInput.Text);
+                        var adapter = new SpinnerAdapter(this.Activity, Resource.Layout.Row, Umpires.ToArray());
+                        if (Resource.Id.umpire1 == e.Parent.Id)
+                        {
+                            mUmpireOne.Adapter = adapter;
+                            mUmpireOne.SetSelection(Umpires.Count - 1);
+                        }
+                        else
+                        {
+                            mUmpireTwo.Adapter = adapter;
+                            mUmpireTwo.SetSelection(Umpires.Count - 1);
+                        }
+                    }
+                });
+            inputDialog.SetNegativeButton("Dismiss", (senderAlert, args) =>
+            {
+                if (Resource.Id.umpire1 == e.Parent.Id) mUmpireOne.SetSelection(0);
+                else mUmpireTwo.SetSelection(0);
+            });
+            inputDialog.Show();
+        }
+
         private void setLocation(object sender, AdapterView.ItemSelectedEventArgs e)
         {
             DisableCreateMatchButtonIf();
@@ -171,7 +231,6 @@ namespace CricketScoreSheet.Screens
                 "Ok",
                 (senderAlert, args) =>
                 {
-                    var locationValid = new MatchValidator(Access.MatchService.GetMatches());
                     if (string.IsNullOrEmpty(userInput.Text))
                     {
                         Toast.MakeText(this.Activity, "Location cannot be blank.", ToastLength.Short)
@@ -264,6 +323,8 @@ namespace CricketScoreSheet.Screens
             {
                 TotalOvers = tOvers,
                 Location = mLocation.SelectedItem.ToString(),
+                UmpireOne = mUmpireOne.SelectedItem.ToString(),
+                UmpireTwo = mUmpireTwo.SelectedItem.ToString(),
                 HomeTeam = homeTeam == null ? null : Access.TeamService.MapTeamEntityToTeam(homeTeam),
                 AwayTeam = awayTeam == null ? null : Access.TeamService.MapTeamEntityToTeam(awayTeam)
             };
@@ -275,14 +336,44 @@ namespace CricketScoreSheet.Screens
                 return 0;
             }
             match.Location = (match.Location == @"Select Ground/Location") ? "" : match.Location;
+            match.UmpireOne = (match.UmpireOne == @"Select Umpire") ? "" : match.UmpireOne;
+            match.UmpireTwo = (match.UmpireTwo == @"Select Umpire") ? "" : match.UmpireTwo;
             var matchId = Access.MatchService.AddMatch(match);
+            if (!string.IsNullOrEmpty(match.UmpireOne))
+                Access.UmpireService.AddUmpire(matchId, match.UmpireOne, true);
+            if (!string.IsNullOrEmpty(match.UmpireTwo))
+                Access.UmpireService.AddUmpire(matchId, match.UmpireTwo, string.IsNullOrEmpty(match.UmpireOne) ? true : false);
 
             //Copy players into new match
             var homeTeamPlayers = Access.PlayerService.GetPlayersPerTeam(homeTeam.Id).GroupBy(hp => hp.Name).Select(hn => hn.First()).ToList();
+
+            //Remove multiple captain and keepers
+            if (homeTeamPlayers.Where(n=>n.Name.Contains("*")).Count() > 1)
+            {
+                for(int i = 1; i < homeTeamPlayers.Count; i++)
+                    homeTeamPlayers[i].Name = homeTeamPlayers[i].Name.Trim('*');
+            }
+            if (homeTeamPlayers.Where(n => n.Name.Contains("†")).Count() > 1)
+            {
+                for (int i = 1; i < homeTeamPlayers.Count; i++)
+                    homeTeamPlayers[i].Name = homeTeamPlayers[i].Name.Trim('†');
+            }
             foreach (var hname in homeTeamPlayers)
                 Access.PlayerService.AddPlayer(homeTeam.Id, matchId, hname.Name);
 
             var awayTeamPlayers = Access.PlayerService.GetPlayersPerTeam(awayTeam.Id).GroupBy(ap => ap.Name).Select(an => an.First()).ToList();
+
+            //Remove multiple captain and keepers
+            if (awayTeamPlayers.Where(n => n.Name.Contains("*")).Count() > 1)
+            {
+                for (int i = 1; i < awayTeamPlayers.Count; i++)
+                    awayTeamPlayers[i].Name = awayTeamPlayers[i].Name.Trim('*');
+            }
+            if (awayTeamPlayers.Where(n => n.Name.Contains("†")).Count() > 1)
+            {
+                for (int i = 1; i < awayTeamPlayers.Count; i++)
+                    awayTeamPlayers[i].Name = awayTeamPlayers[i].Name.Trim('†');
+            }
             foreach (var aname in awayTeamPlayers)
                 Access.PlayerService.AddPlayer(awayTeam.Id, matchId, aname.Name);
 

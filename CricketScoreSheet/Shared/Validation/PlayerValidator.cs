@@ -17,15 +17,22 @@ namespace CricketScoreSheet.Shared.Validation
         {
             var results = new List<string>();
 
-            if (string.IsNullOrEmpty(playername))
+            if (string.IsNullOrEmpty(playername.TrimEnd('*', '†')))
             {
                 results.Add("Player name cannot be blank.");
             }
-            if (PlayersPerTeam.Any(t => t.Name == playername))
+            if (PlayersPerTeam.Any(t => t.Name.TrimEnd('*', '†') == playername.TrimEnd('*', '†')))
             {
-                results.Add($"This player name {playername} already exist.");
+                results.Add($"This player name {playername.TrimEnd('*', '†')} already exist.");
             }
-
+            if (PlayersPerTeam.Any(t => playername.Contains("*") && t.Name.Contains("*")))
+            {
+                results.Add($"Captain already exist. If you want to add captain, please delete previous captain.");
+            }
+            if (PlayersPerTeam.Any(t => playername.Contains("†") && t.Name.Contains("†")))
+            {
+                results.Add($"Keeper already exist. If you want to add keeper, please delete previous keeper.");
+            }
             return results;
         }
     }

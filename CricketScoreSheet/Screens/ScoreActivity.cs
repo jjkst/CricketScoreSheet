@@ -51,7 +51,6 @@ namespace CricketScoreSheet.Screens
             Access = new Access();
         }
 
-
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -76,8 +75,6 @@ namespace CricketScoreSheet.Screens
             mActiveBowler.ItemSelected += ActiveBowler_ItemSelected;
             mFielder_Keeper = FindViewById<Spinner>(Resource.Id.fielder);
             mFielder_Keeper.ItemSelected += Fielder_Keeper_ItemSelected;
-
-            
 
             // Score and wickets
             mRunsWickets1 = FindViewById<RadioGroup>(Resource.Id.runswickets1);
@@ -146,11 +143,17 @@ namespace CricketScoreSheet.Screens
             if (Play == "Batsman") 
                 mActiveBatsman.SetSelection(Array.IndexOf(batsman.Select(i=>i.Id).ToArray(), PlayerId));
 
-            var bowler = bowlingTeam.Players.Select(b => new { b.Id, b.Name });
+            var bowler = bowlingTeam.Players.Select(b => new { b.Id, b.Name, b.BallsBowled });
             var bowlerAdapter = new SpinnerAdapter(this, Resource.Layout.Row, bowler.Select(x => x.Name).ToArray());
             mActiveBowler.Adapter = bowlerAdapter;
             if (Play == "Bowler")
                 mActiveBowler.SetSelection(Array.IndexOf(bowler.Select(i => i.Id).ToArray(), PlayerId));
+            else
+            {
+                var currentBowler = bowler.Where(bow => Helper.ConvertBallstoOvers(bow.BallsBowled).Split('.')[1] != "0");
+                if(currentBowler.Any())
+                    mActiveBowler.SetSelection(Array.IndexOf(bowler.Select(i => i.Id).ToArray(), currentBowler.First().Id));
+            }
 
             mFielder_Keeper.Adapter = bowlerAdapter;
         }

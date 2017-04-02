@@ -3,6 +3,7 @@ using CricketScoreSheet.Shared.DataAccess.Repository;
 using CricketScoreSheet.Shared.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CricketScoreSheet.Shared.Services
 {
@@ -22,7 +23,7 @@ namespace CricketScoreSheet.Shared.Services
         public int AddMatch(Match match)
         {
             MatchEntity newMatch = new MatchEntity
-            {                
+            {
                 MatchDate = DateTime.Today.ToString("MMM dd, yyyy"),
                 TotalOvers = match.TotalOvers,
                 Location = match.Location,
@@ -50,9 +51,8 @@ namespace CricketScoreSheet.Shared.Services
                 AwayTeamWides = 0,
                 AwayTeamByes = 0,
                 AwayTeamLegByes = 0,
-                AwayTeamInningsComplete = false   
+                AwayTeamInningsComplete = false
             };
-
             return MatchesTable.AddMatch(newMatch);
         }
 
@@ -248,6 +248,20 @@ namespace CricketScoreSheet.Shared.Services
 
         private Match MapMatchEntityToMatch(MatchEntity matchentity)
         {
+            var umpireOneName = "";
+            var umpireOne = Access.UmpireService.GetUmpires().Where(u => u.MatchId == matchentity.Id && u.Primary == true);
+            if (umpireOne.Any())
+            {
+                umpireOneName = umpireOne.First().Name;
+            }
+
+            var umpireTwoName = "";
+            var umpireTwo = Access.UmpireService.GetUmpires().Where(u => u.MatchId == matchentity.Id && u.Primary == false);
+            if (umpireTwo.Any())
+            {
+                umpireTwoName = umpireTwo.First().Name;
+            }
+
             return new Match
             {
                 Id = matchentity.Id,
@@ -285,7 +299,9 @@ namespace CricketScoreSheet.Shared.Services
                     InningsComplete = matchentity.AwayTeamInningsComplete,
                     Players = Access.PlayerService.GetPlayersPerTeamPerMatch(matchentity.AwayTeamId, matchentity.Id)
                 },
-                WinningTeamName = matchentity.WinningTeamName
+                WinningTeamName = matchentity.WinningTeamName,
+                UmpireOne = umpireOneName,
+                UmpireTwo = umpireTwoName
             };
         }
 
@@ -303,8 +319,15 @@ namespace CricketScoreSheet.Shared.Services
                                     td.textcenter{text-align:center;}
                                 </style>
                            </head>";
+
+            var umpirelabel = "";
+            var umpires = match.UmpireOne + (string.IsNullOrEmpty(match.UmpireTwo) ? "" : $", {match.UmpireTwo}");            
+            if (!string.IsNullOrEmpty(umpires.Trim()))
+                umpirelabel = $"<label> Umpires: {umpires.TrimEnd(',').TrimStart(',')} </label>";
+
             var card = $@"<div class=""ClassName"">
-                                <h3> {match.Date}, at {match.Location} </h3>
+                                <h3> {match.Date}{(string.IsNullOrEmpty(match.Location) ? "" : $", at {match.Location}")} </h3>
+                                {umpirelabel}
                                 <label> {match.HomeTeam.Name} {match.HomeTeam.Runs}/{match.HomeTeam.Wickets} ({hometeamovers}/{match.TotalOvers}) </label></br>      
                                 <label> {match.AwayTeam.Name} {match.AwayTeam.Runs}/{match.AwayTeam.Wickets} ({awayteamovers}/{match.TotalOvers}) </label></br>        
                                 <label> {match.Comments} </label>            

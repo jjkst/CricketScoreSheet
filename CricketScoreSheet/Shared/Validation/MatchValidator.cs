@@ -29,8 +29,14 @@ namespace CricketScoreSheet.Shared.Validation
                     results.Add(@"Please select/add valid Home Team.");
                 if (match.AwayTeam == null)
                     results.Add(@"Please select/add valid Away Team.");
-                if (match.Location == @"Add Ground/Location.")
+                if (match.Location == @"Add Ground/Location")
                     results.Add(@"Please select/add valid location.");
+                if (match.UmpireOne == @"Add Umpire")
+                    results.Add(@"Please select/add umpire one.");
+                if (match.UmpireTwo == @"Add Umpire")
+                    results.Add(@"Please select/add umpire two.");
+                if (match.UmpireOne != "Select Umpire" && match.UmpireOne == match.UmpireTwo)
+                    results.Add(@"Umpire one and two cannot be same.");
                 if (match.TotalOvers == 0)
                     results.Add("Please select valid total overs.");
             }

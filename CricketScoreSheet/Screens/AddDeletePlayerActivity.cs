@@ -17,6 +17,8 @@ namespace CricketScoreSheet.Screens
     [Activity(Label = "Add / Delete Players", Theme = "@style/MyTheme")]
     public class AddDeletePlayerActivity : AppCompatActivity
     {
+        private CheckBox mCaptain;
+        private CheckBox mKeeper;
         private EditText mNewPlayerName;
         private Button mAddNewPlayerBtn;
         private RecyclerView mPlayerNameRecycler;
@@ -48,6 +50,8 @@ namespace CricketScoreSheet.Screens
             SupportActionBar.Title = teamname + " team players";
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
+            mCaptain = FindViewById<CheckBox>(Resource.Id.captain);
+            mKeeper = FindViewById<CheckBox>(Resource.Id.keeper);
             mNewPlayerName = FindViewById<EditText>(Resource.Id.newplayer);
             mAddNewPlayerBtn = FindViewById<Button>(Resource.Id.addnewplayer);
             mAddNewPlayerBtn.Click += AddNewPlayerBtn_Click;
@@ -64,9 +68,9 @@ namespace CricketScoreSheet.Screens
 
         private void AddNewPlayerBtn_Click(object sender, System.EventArgs e)
         {
-            var newPlayerName = mNewPlayerName.Text;
-            var valid = new PlayerValidator(Access.PlayerService.GetPlayersPerTeam(SelectedTeam == "Batting" ? BattingTeamId : BowlingTeamId))
-                .Validate(newPlayerName);
+            var newPlayerName = mNewPlayerName.Text + (mCaptain.Checked ? "*" : "") + (mKeeper.Checked ? "†" : "");
+            var valid = new PlayerValidator(Access.PlayerService.GetPlayersPerTeamPerMatch(SelectedTeam == "Batting" ? 
+                BattingTeamId : BowlingTeamId, MatchId)).Validate(newPlayerName);
             if (valid.Any())
             {
                 Toast.MakeText(this, string.Join(System.Environment.NewLine, valid.ToArray()), ToastLength.Long).Show();
@@ -77,11 +81,14 @@ namespace CricketScoreSheet.Screens
                 GetPlayers_SetAdapter();
             }
             mNewPlayerName.Text = string.Empty;
+            mCaptain.Checked = false;
+            mKeeper.Checked = false;
         }
 
         private void DeletePlayerBtn_ItemClick(object sender, PlayerEntity player)
         {
-            Access.PlayerService.DeletePlayer(player);
+            Toast.MakeText(this, "Player will be deleted only for this match.", ToastLength.Short).Show();
+            Access.PlayerService.DeletePlayer(player);            
             GetPlayers_SetAdapter();
         }
 

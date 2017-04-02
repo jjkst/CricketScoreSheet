@@ -16,6 +16,17 @@ namespace CricketScoreSheet.Shared.Services
             }
         }
 
+        private UmpireService umpireService;
+        public UmpireService UmpireService
+        {
+            get
+            {
+                if (umpireService == null)
+                    umpireService = new UmpireService();
+                return umpireService;
+            }
+        }
+
         private TeamService teamService;
         public TeamService TeamService
         {

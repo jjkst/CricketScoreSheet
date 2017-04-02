@@ -26,6 +26,26 @@
             android:paddingLeft="20dp"
             android:background="@drawable/action_add" />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:weightSum="100"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:layout_margin="5dp">
+        <CheckBox
+            android:id="@+id/captain"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="match_parent"
+            android:text="Captain" />
+        <CheckBox
+            android:id="@+id/keeper"
+            android:layout_width="0dp"
+            android:layout_weight="30"
+            android:layout_height="match_parent"
+            android:text="Keeper" />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

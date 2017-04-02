@@ -73,6 +73,12 @@ namespace CricketScoreSheet
             var prevFragment = FragmentManager.FindFragmentById(Resource.Id.FrameLayout);
             ft.Remove(prevFragment);
 
+            var adUnitId = Resources.GetString(Resource.String.ProdAdUnitId);
+            var FinalAd = AdWrapper.ConstructFullPageAdd(this, adUnitId);
+            var intlistener = new MyAdListener();
+            intlistener.AdLoaded += () => { if (FinalAd.IsLoaded) FinalAd.Show(); };
+            FinalAd.AdListener = intlistener;
+
             switch (e.MenuItem.ItemId)
             {
                 case (Resource.Id.nav_home):
@@ -80,10 +86,12 @@ namespace CricketScoreSheet
                     ft.Replace(Resource.Id.FrameLayout, new HomeFragment());
                     break;
                 case (Resource.Id.nav_matchresults):
+                    if (Access.MatchService.GetMatches().Count > 0) FinalAd.CustomBuild();
                     SupportActionBar.SetTitle(Resource.String.CompletedMatches);
                     ft.Replace(Resource.Id.FrameLayout, new MatchesFragment());
                     break;
                 case (Resource.Id.nav_batsmanstats):
+                    if(Access.PlayerService.GetPlayers().Count > 8) FinalAd.CustomBuild();
                     SupportActionBar.SetTitle(Resource.String.BatsmanStats);
                     ft.Replace(Resource.Id.FrameLayout, new BatsmanStatsFragment());
                     break;

@@ -183,10 +183,12 @@
     <Compile Include="Shared\DataAccess\Entities\MatchEntity.cs" />
     <Compile Include="Shared\DataAccess\Entities\PlayerEntity.cs" />
     <Compile Include="Shared\DataAccess\Entities\TeamEntity.cs" />
+    <Compile Include="Shared\DataAccess\Entities\UmpireEntity.cs" />
     <Compile Include="Shared\DataAccess\Repository\MatchesTable.cs" />
     <Compile Include="Shared\DataAccess\Repository\MyRepository.cs" />
     <Compile Include="Shared\DataAccess\Repository\PlayersTable.cs" />
     <Compile Include="Shared\DataAccess\Repository\TeamsTable.cs" />
+    <Compile Include="Shared\DataAccess\Repository\UmpiresTable.cs" />
     <Compile Include="Shared\Models\Ball.cs" />
     <Compile Include="Shared\Models\CalcBall.cs" />
     <Compile Include="Shared\Models\Match.cs" />
@@ -197,10 +199,12 @@
     <Compile Include="Shared\Services\MatchService.cs" />
     <Compile Include="Shared\Services\PlayerService.cs" />
     <Compile Include="Shared\Services\TeamService.cs" />
+    <Compile Include="Shared\Services\UmpireService.cs" />
     <Compile Include="Shared\Validation\BallValidator.cs" />
     <Compile Include="Shared\Validation\MatchValidator.cs" />
     <Compile Include="Shared\Validation\PlayerValidator.cs" />
     <Compile Include="Shared\Validation\TeamValidator.cs" />
+    <Compile Include="Shared\Validation\UmpireValidator.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
   </ItemGroup>
@@ -237,7 +241,9 @@
     <AndroidResource Include="Resources\layout\Matches.axml" />
     <AndroidResource Include="Resources\layout\Matches_NoAppBar.axml" />
     <AndroidResource Include="Resources\layout\MatchRow.axml" />
-    <AndroidResource Include="Resources\layout\NewGame.axml" />
+    <AndroidResource Include="Resources\layout\NewGame.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
     <AndroidResource Include="Resources\layout\PlayerNameRow_ViewDelete.axml" />
     <AndroidResource Include="Resources\layout\Row.axml" />
     <AndroidResource Include="Resources\layout\Score.axml">
@@ -382,6 +388,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Style_GreenTitleBar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

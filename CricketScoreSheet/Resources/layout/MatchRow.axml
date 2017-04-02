@@ -23,6 +23,12 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:gravity="center"/>
+      <TextView
+            android:id="@+id/lineumpire"
+            android:text="Umpires : "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
         <TextView
             android:id="@+id/linetwo"
             android:layout_width="match_parent"

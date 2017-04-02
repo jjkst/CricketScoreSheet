@@ -6,6 +6,15 @@
     android:layout_height="match_parent">
     <include
         layout="@layout/AppBar" />
+  <TextView
+    android:text="Umpires : "
+    android:id="@+id/umpires"
+    android:layout_width="match_parent"
+    android:layout_height="25dp"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:textColor="#ffffff"
+    android:background="@drawable/Style_GreenTitleBar" />
     <RadioGroup
         android:id="@+id/currentinnings"
         android:orientation="horizontal"

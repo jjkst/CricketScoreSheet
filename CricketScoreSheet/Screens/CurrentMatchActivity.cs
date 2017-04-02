@@ -20,6 +20,7 @@ namespace CricketScoreSheet.Screens
         , ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class CurrentMatchActivity : AppCompatActivity, RadioGroup.IOnCheckedChangeListener
     {
+        private TextView mUmpires;
         private RadioGroup mCurrentInnings;
         private RadioButton mHometeaminnings;
         private RadioButton mAwayteaminnings;
@@ -50,6 +51,17 @@ namespace CricketScoreSheet.Screens
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             SupportActionBar.SetDisplayShowHomeEnabled(true);
 
+            mUmpires = FindViewById<TextView>(Resource.Id.umpires);
+            var umpires = Match.UmpireOne + (string.IsNullOrEmpty(Match.UmpireTwo) ? "" : $", {Match.UmpireTwo}");
+            if(string.IsNullOrEmpty(umpires.Trim()))
+            {
+                mUmpires.Visibility = ViewStates.Gone;
+            }
+            else
+            {
+                mUmpires.Text = mUmpires.Text + umpires.TrimEnd(',').TrimStart(',');
+            }
+            
             mCurrentInnings = FindViewById<RadioGroup>(Resource.Id.currentinnings);
             mCurrentInnings.SetOnCheckedChangeListener(this);
             mHometeaminnings = FindViewById<RadioButton>(Resource.Id.hometeaminnings);
