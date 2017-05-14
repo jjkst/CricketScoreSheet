@@ -42,7 +42,8 @@ namespace CricketScoreSheet.Screens
                 .GroupBy(l => l.Location).Select(lo => lo.First().Location).ToList());
 
             Umpires.AddRange(new List<string> { "Select Umpire", "Add Umpire" });
-            Umpires.AddRange(Access.UmpireService.GetUmpires().Select(u=>u.Name));
+            Umpires.AddRange(Access.UmpireService.GetUmpires().GroupBy(un => un.Name)
+                .Select(u=>u.First().Name).ToList());
 
             mOversArray = new string[]{ "Ten10", "Twenty20", "ThirtyFive35", "Forty40", "Fifty50", "Custom"};
         }

@@ -24,7 +24,8 @@ namespace CricketScoreSheet.Adapters
 
         public void UpdatedList(List<PlayerStatistics> searchedPlayers)
         {
-            _mPlayers = searchedPlayers.OrderByDescending(r => new { r.Runs, r.BattingAvg }).ToList();
+            _mPlayers = searchedPlayers.OrderByDescending(r => r.Runs)
+                .ThenByDescending(r=> r.BattingAvg).ToList();
         }
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)

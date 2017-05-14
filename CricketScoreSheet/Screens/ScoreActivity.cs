@@ -644,9 +644,25 @@ namespace CricketScoreSheet.Screens
                         Match.HomeTeam.InningsComplete = true;
                     else Match.AwayTeam.InningsComplete = true;
                     if (Match.HomeTeam.InningsComplete && Match.AwayTeam.InningsComplete)
+                    {
                         Match.Complete = true;
-                    Access.MatchService.UpdateMatch(Match);                    
-                    GotoCurrentMatch();
+                        var diffruns = Match.HomeTeam.Runs - Match.AwayTeam.Runs;
+                        if (diffruns == 0)
+                        {
+                            Match.Comments = "Game is tie"; 
+                        }
+                        else
+                        {
+                            Match.WinningTeamName = (diffruns > 0) ? Match.HomeTeam.Name : Match.AwayTeam.Name;
+                            Match.Comments = Match.WinningTeamName + " won by " + Math.Abs(diffruns) + " runs";
+                        }
+                        MatchComplete($"Congratulations, { Match.Comments}");
+                    }
+                    else
+                    {
+                        GotoCurrentMatch();
+                    }    
+                    Access.MatchService.UpdateMatch(Match);                                        
                 });
                 wicketsgone.SetNegativeButton("No, Continue", (senderAlert, args) => {
                     wicketsgone.Dispose();
