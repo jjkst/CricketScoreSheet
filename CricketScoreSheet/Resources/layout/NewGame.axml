@@ -4,87 +4,79 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minWidth="360dp">
-  <TextView
-    android:text="New Game Details"
+    <TextView
+        android:text="Select/Add a home team :"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/homeTeam"
+        android:gravity="center_vertical"
+        style="@style/style_spinner" />
+    <TextView
+        android:text="Select/Add a away team :"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/awayTeam"
+        style="@style/style_spinner" />
+    <TextView
+        android:text="Select total overs :"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/overs"
+        style="@style/style_spinner" />
+    <TextView
+        android:text="Select/Add location or ground : (Optional)"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/location"
+        style="@style/style_spinner" />
+    <TextView
+        android:text="Select/Add Umpire Primary : (Optional)"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/umpire1"
+        style="@style/style_spinner" />
+    <TextView
+        android:text="Select/Add Umpire Secondary : (Optional)"
+        android:layout_width="match_parent"
+        android:layout_height="17dp"
+        android:paddingLeft="10dp"
+        android:textStyle="bold" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/umpire2"
+        style="@style/style_spinner" />
+  <Button
+    android:id="@+id/createMatchButton"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:textSize="20sp"
-    android:textColor="#ffffff"
-    android:gravity="center"
-    android:background="@drawable/Style_TitleBar" />
-      <TextView
-          android:text="Select/Add a home team :"
-          android:layout_width="match_parent"
-          android:layout_height="17dp"
-          android:layout_marginTop="5dp"
-          android:paddingLeft="10dp"
-          android:textStyle="bold" />
-      <Spinner
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:id="@+id/homeTeam"
-          android:gravity="center_vertical"
-          style="@style/style_spinner" />
-      <TextView
-          android:text="Select/Add a away team :"
-          android:layout_width="match_parent"
-          android:layout_height="17dp"
-          android:paddingLeft="10dp"
-          android:textStyle="bold" />
-      <Spinner
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:id="@+id/awayTeam"
-          style="@style/style_spinner" />
-      <TextView
-          android:text="Select total overs :"
-          android:layout_width="match_parent"
-          android:layout_height="17dp"
-          android:paddingLeft="10dp"
-          android:textStyle="bold" />
-      <Spinner
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:id="@+id/overs"
-          style="@style/style_spinner" />
-      <TextView
-          android:text="Select/Add location or ground : (Optional)"
-          android:layout_width="match_parent"
-          android:layout_height="17dp"
-          android:paddingLeft="10dp"
-          android:textStyle="bold" />
-      <Spinner
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:id="@+id/location"
-          style="@style/style_spinner" />
-      <TextView
-          android:text="Select/Add Umpire Primary : (Optional)"
-          android:layout_width="match_parent"
-          android:layout_height="17dp"
-          android:paddingLeft="10dp"
-          android:textStyle="bold" />
-      <Spinner
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:id="@+id/umpire1"
-          style="@style/style_spinner" />
-      <TextView
-          android:text="Select/Add Umpire Secondary : (Optional)"
-          android:layout_width="match_parent"
-          android:layout_height="17dp"
-          android:paddingLeft="10dp"
-          android:textStyle="bold" />
-      <Spinner
-          android:layout_width="match_parent"
-          android:layout_height="40dp"
-          android:id="@+id/umpire2"
-          style="@style/style_spinner" />
-    <Button
-        android:id="@+id/createMatchButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/Style_Button"
-        android:text="Create Match"
-        android:textColor="@color/abc_secondary_text_material_light" />
+    android:background="@drawable/Style_Button"
+    android:text="Create Match"
+    android:textColor="@color/abc_secondary_text_material_light" />
 </LinearLayout>

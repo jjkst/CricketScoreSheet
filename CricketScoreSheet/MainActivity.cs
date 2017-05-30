@@ -126,6 +126,7 @@ namespace CricketScoreSheet
                     // Copy pdf file to external drive
                     var filename = "Help_CSS.pdf";
                     Java.IO.File pdfFile = new Java.IO.File(Helper.DownloadPath, filename);
+                    pdfFile.SetReadable(true);
                     if (!pdfFile.Exists())
                     {
                         AssetManager assetManager = Assets;
@@ -139,6 +140,7 @@ namespace CricketScoreSheet
                     Uri path = Uri.FromFile(pdfFile);
                     Intent pdfIntent = new Intent(Intent.ActionView);
                     pdfIntent.SetDataAndType(path, "application/pdf");
+                    pdfIntent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
                     StartActivity(pdfIntent);                        
                     return true;
                 default:
