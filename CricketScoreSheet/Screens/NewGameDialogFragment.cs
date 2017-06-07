@@ -95,7 +95,7 @@ namespace CricketScoreSheet.Screens
             mCreateMatchBtn.Enabled = false;
             mCreateMatchBtn.Click += (object sender, EventArgs e) =>
             {
-                var matchId = AddMatch();
+                int matchId = AddMatch();
                 if (matchId == 0) return;
                 var currentMatchActivity = new Intent(this.Activity, typeof(CurrentMatchActivity));
                 currentMatchActivity.PutExtra("MatchId", matchId);

@@ -6,15 +6,17 @@ using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Util;
 using Android.Views;
 using CricketScoreSheet.Screens;
 using CricketScoreSheet.Shared.Services;
+using System;
 using System.IO;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace CricketScoreSheet
 {
-    [Activity(Label = "Circket Score Sheet", Theme = "@style/MyTheme", MainLauncher = true, Icon = "@drawable/ic_launcher"
+    [Activity(Label = "Cricket Score Sheet", Theme = "@style/MyTheme", MainLauncher = true, Icon = "@drawable/ic_launcher"
         , ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MainActivity : AppCompatActivity
     { 
@@ -29,6 +31,8 @@ namespace CricketScoreSheet
 
         protected override void OnCreate(Bundle bundle)
         {
+            IO.Fabric.Sdk.Android.Fabric.With(this, new Com.Crashlytics.Android.Crashlytics());
+
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
             var nav = Intent.GetStringExtra("Nav");
@@ -70,15 +74,15 @@ namespace CricketScoreSheet
         private void NavigationView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
         {
             var ft = FragmentManager.BeginTransaction();
-            var prevFragment = FragmentManager.FindFragmentById(Resource.Id.FrameLayout);
-            if (prevFragment != null) ft.Remove(prevFragment);
-
-            //var adUnitId = Resources.GetString(Resource.String.ProdAdUnitId);
-            //var FinalAd = AdWrapper.ConstructFullPageAdd(this, adUnitId);
-            //var intlistener = new MyAdListener();
-            //intlistener.AdLoaded += () => { if (FinalAd.IsLoaded) FinalAd.Show(); };
-            //FinalAd.AdListener = intlistener;
-
+            try
+            {                
+                var prevFragment = FragmentManager.FindFragmentById(Resource.Id.FrameLayout);
+                if (prevFragment != null) ft.Remove(prevFragment);
+            }
+            catch(Exception ex)
+            {
+                Log.Debug("ClearingFragment", ex.Message);
+            }
             switch (e.MenuItem.ItemId)
             {
                 case (Resource.Id.nav_home):
@@ -86,12 +90,10 @@ namespace CricketScoreSheet
                     ft.Replace(Resource.Id.FrameLayout, new HomeFragment());
                     break;
                 case (Resource.Id.nav_matchresults):
-                    //if (Access.MatchService.GetMatches().Count > 0) FinalAd.CustomBuild();
                     SupportActionBar.SetTitle(Resource.String.CompletedMatches);
                     ft.Replace(Resource.Id.FrameLayout, new MatchesFragment());
                     break;
                 case (Resource.Id.nav_batsmanstats):
-                    //if(Access.PlayerService.GetPlayers().Count > 8) FinalAd.CustomBuild();
                     SupportActionBar.SetTitle(Resource.String.BatsmanStats);
                     ft.Replace(Resource.Id.FrameLayout, new BatsmanStatsFragment());
                     break;
@@ -103,6 +105,7 @@ namespace CricketScoreSheet
                     Access.MatchService.DropMatchesTable();
                     Access.TeamService.DropTeamsTable();
                     Access.PlayerService.DropPlayersTable();
+                    Access.UmpireService.DropUmpiresTable();
                     break;
             }
             ft.Commit();
@@ -136,8 +139,8 @@ namespace CricketScoreSheet
                             inputstream.CopyTo(memoryStream);
                             Helper.SavePdfFile(filename, memoryStream.ToArray());
                         }
-                    }                    
-                    Uri path = Uri.FromFile(pdfFile);
+                    }
+                    Android.Net.Uri path = Android.Net.Uri.FromFile(pdfFile);
                     Intent pdfIntent = new Intent(Intent.ActionView);
                     pdfIntent.SetDataAndType(path, "application/pdf");
                     pdfIntent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);

@@ -327,10 +327,10 @@ namespace CricketScoreSheet.Shared.Services
 
             var card = $@"<div class=""ClassName"">
                                 <h3> {match.Date}{(string.IsNullOrEmpty(match.Location) ? "" : $", at {match.Location}")} </h3>
-                                {umpirelabel}
+                                <label> {umpirelabel}</label></br>
                                 <label> {match.HomeTeam.Name} {match.HomeTeam.Runs}/{match.HomeTeam.Wickets} ({hometeamovers}/{match.TotalOvers}) </label></br>      
                                 <label> {match.AwayTeam.Name} {match.AwayTeam.Runs}/{match.AwayTeam.Wickets} ({awayteamovers}/{match.TotalOvers}) </label></br>        
-                                <label> {match.Comments} </label>            
+                                <label>card {match.Comments} </label>            
                            </div>";
 
             var fi_BattingHeader = $@"<tr>
@@ -398,6 +398,7 @@ namespace CricketScoreSheet.Shared.Services
                         <td class=""data textcenter"">{econ}</td>
                      <tr>";
             }
+
             // Second innings
             var si_BattingHeader = $@"<tr>
                                     <th colspan=""2"" class=""header""><center>{match.AwayTeam.Name} Innings ({match.TotalOvers} over(s) maximum)</center></th>
@@ -439,7 +440,7 @@ namespace CricketScoreSheet.Shared.Services
                            </tr>";
 
             string si_Bowlers = "";
-            foreach (var sbowler in match.AwayTeam.Players)
+            foreach (var sbowler in match.HomeTeam.Players)
             {
                 if (sbowler.BallsBowled < 1) continue;
                 var overs = Helper.ConvertBallstoOvers(sbowler.BallsBowled);

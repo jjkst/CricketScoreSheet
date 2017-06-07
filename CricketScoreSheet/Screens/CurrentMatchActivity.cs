@@ -34,6 +34,7 @@ namespace CricketScoreSheet.Screens
         public CurrentMatchActivity()
         {
             Access = new Access();
+            Match = new Match();
         }
 
         protected override void OnCreate(Bundle savedInstanceState)
