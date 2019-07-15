@@ -569,6 +569,7 @@ namespace CricketScoreSheet.Screens
             mExtra1Runs.Enabled = false;
             mExtra2Runs.SetSelection(0);
             mExtra2Runs.Enabled = false;
+            ThisBall = new Ball();
         }
 
         private void UpdateScore(object sender, EventArgs e)
