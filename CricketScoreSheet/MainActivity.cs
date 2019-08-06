@@ -1,17 +1,22 @@
-﻿using Android.App;
+﻿using Android;
+using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Net;
 using Android.OS;
+using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Util;
 using Android.Views;
+using Android.Widget;
 using CricketScoreSheet.Screens;
 using CricketScoreSheet.Shared.Services;
 using System;
 using System.IO;
+using System.Threading.Tasks;
+using AlertDialog = Android.App.AlertDialog;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace CricketScoreSheet
@@ -29,10 +34,10 @@ namespace CricketScoreSheet
             Access = new Shared.Services.Access();
         }
 
-        protected override void OnCreate(Bundle bundle)
+        protected async override void OnCreate(Bundle bundle)
         {
             IO.Fabric.Sdk.Android.Fabric.With(this, new Com.Crashlytics.Android.Crashlytics());
-
+            await GetPermissionsAsync();
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
             var nav = Intent.GetStringExtra("Nav");
@@ -140,10 +145,19 @@ namespace CricketScoreSheet
                             Helper.SavePdfFile(filename, memoryStream.ToArray());
                         }
                     }
-                    Android.Net.Uri path = Android.Net.Uri.FromFile(pdfFile);
+                    Android.Net.Uri result;
+                    if (Build.VERSION.SdkInt < (BuildVersionCodes)24)
+                    {
+                        result = Android.Net.Uri.FromFile(pdfFile);
+                    }
+                    else
+                    {
+                        result = Android.Support.V4.Content.FileProvider.GetUriForFile(this, this.ApplicationContext.PackageName + ".provider", pdfFile);
+                    }
                     Intent pdfIntent = new Intent(Intent.ActionView);
-                    pdfIntent.SetDataAndType(path, "application/pdf");
+                    pdfIntent.SetDataAndType(result, "application/pdf");
                     pdfIntent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
+                    pdfIntent.AddFlags(ActivityFlags.GrantReadUriPermission);
                     StartActivity(pdfIntent);                        
                     return true;
                 default:
@@ -167,6 +181,87 @@ namespace CricketScoreSheet
                 base.OnBackPressed();
             }
         }
+        #region RuntimePermissions
+
+        async Task TryToGetPermissions()
+        {
+            if ((int)Build.VERSION.SdkInt >= 23)
+            {
+                await GetPermissionsAsync();
+                return;
+            }
+
+
+        }
+
+        const int RequestLocationId = 0;
+
+        readonly string[] PermissionsGroupLocation =
+            {
+                            Manifest.Permission.WriteExternalStorage             
+            };
+
+        async Task GetPermissionsAsync()
+        {
+            const string permission = Manifest.Permission.WriteExternalStorage;
+
+            if (CheckSelfPermission(permission) == (int)Android.Content.PM.Permission.Granted)
+            {
+                //TODO change the message to show the permissions name
+                Toast.MakeText(this, "Special permissions granted", ToastLength.Short).Show();
+                return;
+            }
+
+            if (ShouldShowRequestPermissionRationale(permission))
+            {
+                //set alert for executing the task
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.SetTitle("Permissions Needed");
+                alert.SetMessage("The application need special permissions to continue");
+                alert.SetPositiveButton("Request Permissions", (senderAlert, args) =>
+                {
+                    RequestPermissions(PermissionsGroupLocation, RequestLocationId);
+                });
+
+                alert.SetNegativeButton("Cancel", (senderAlert, args) =>
+                {
+                    Toast.MakeText(this, "Cancelled!", ToastLength.Short).Show();
+                });
+
+                Dialog dialog = alert.Create();
+                dialog.Show();
+
+
+                return;
+            }
+
+            RequestPermissions(PermissionsGroupLocation, RequestLocationId);
+
+        }
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            switch (requestCode)
+            {
+                case RequestLocationId:
+                    {
+                        if (grantResults[0] == (int)Android.Content.PM.Permission.Granted)
+                        {
+                            Toast.MakeText(this, "Special permissions granted", ToastLength.Short).Show();
+
+                        }
+                        else
+                        {
+                            //Permission Denied :(
+                            Toast.MakeText(this, "Special permissions denied", ToastLength.Short).Show();
+
+                        }
+                    }
+                    break;
+            }
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        #endregion
     }
 }
 
