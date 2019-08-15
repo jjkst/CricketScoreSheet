@@ -145,15 +145,8 @@ namespace CricketScoreSheet
                             Helper.SavePdfFile(filename, memoryStream.ToArray());
                         }
                     }
-                    Android.Net.Uri result;
-                    if (Build.VERSION.SdkInt < (BuildVersionCodes)24)
-                    {
-                        result = Android.Net.Uri.FromFile(pdfFile);
-                    }
-                    else
-                    {
-                        result = Android.Support.V4.Content.FileProvider.GetUriForFile(this, this.ApplicationContext.PackageName + ".provider", pdfFile);
-                    }
+                    Android.Net.Uri result = Android.Support.V4.Content.FileProvider.GetUriForFile(this, this.ApplicationContext.PackageName + ".provider", pdfFile);
+                    
                     Intent pdfIntent = new Intent(Intent.ActionView);
                     pdfIntent.SetDataAndType(result, "application/pdf");
                     pdfIntent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
@@ -181,6 +174,7 @@ namespace CricketScoreSheet
                 base.OnBackPressed();
             }
         }
+
         #region RuntimePermissions
 
         async Task TryToGetPermissions()
@@ -198,7 +192,9 @@ namespace CricketScoreSheet
 
         readonly string[] PermissionsGroupLocation =
             {
-                            Manifest.Permission.WriteExternalStorage             
+                            Manifest.Permission.WriteExternalStorage,
+                            Manifest.Permission.AccessNetworkState,
+                            Manifest.Permission.Internet
             };
 
         async Task GetPermissionsAsync()
